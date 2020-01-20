@@ -9,23 +9,8 @@ const httpOptions = {
 class Model extends ObservableModel {
   constructor() {
     super();
-    this._numberOfGuests = 4;
+    this._numberOfGuests = 1;
     this.getNumberOfGuests();
-    this.dishesForMenu=[];
-    this.id = 1;
-  }
-
-  updateStateForButton(type, query) {
-    console.log(type+ " : " + query)
-    this.notifyObservers({up:"StateChange", value: type, cat: query });
-  }
-
-  GetdetailId(){
-    return this.id;
-  }
-
-  setDetailId(id){
-    this.id = id;
   }
 
   /**
@@ -45,55 +30,49 @@ class Model extends ObservableModel {
     this.notifyObservers();
   }
 
-  //Returns the dishes that are on the menu for selected type
-  getSelectedDishes(type) {
-    let selectedDishes = this.getFullMenu().filter(dish => dish.type === type);
-    this.notifyObservers({type:"selectedDishType", value: selectedDishes});
-    return selectedDishes;
-}
-
 //Returns all the dishes on the menu.
-getFullMenu() {
-    return this.dishesForMenu;
+getAllDestinations() {
+    return this.favoriteDestinations;
 }
 
-//Returns all ingredients for all the dishes on the menu.
-getAllIngredients() {
-  //flat() removes empty slots in new array
-   let dishIngredients = this.getFullMenu().map(dish => dish.extendedIngredients).flat();
-   this.notifyObservers({type:"dishIngredients", value: dishIngredients});
-  return dishIngredients;
+// //Returns all ingredients for all the dishes on the menu.
+// getAllIngredients() {
+//   //flat() removes empty slots in new array
+//    let dishIngredients = this.getFullMenu().map(dish => dish.extendedIngredients).flat();
+//    this.notifyObservers({type:"dishIngredients", value: dishIngredients});
+//   return dishIngredients;
+// }
+
+//Returns the total price of the flight
+getTotalPrice() {
+   let totalPrice = this.selectedFligth * this.getNumberOfGuests();
+   this.notifyObservers({type:"totalPrice", value: totalPrice});
+   return totalPrice;
 }
 
-//Returns the total price of the menu (price per serving of each dish multiplied by number of guests).
-getTotalMenuPrice() {
-   let totalMenuPrice = this.getFullMenu() * this.getNumberOfGuests();
-   this.notifyObservers({type:"totalMenuPrice", value: totalMenuPrice});
-   return totalMenuPrice;
-}
-
-//Adds the passed dish to the menu.
-addDishToMenu(dish) {
-  this.dishesForMenu.push(dish); //push adds new items to end of array and returns new length
+//Adds the passed destination to favorite destinations.
+addDestinationToFavorits(destination) {
+  this.favoriteDestinations.push(destination);
   
   /*compose an "event" with the "new" type, and pass the index of a new dish*/
-  this.notifyObservers({type:"newDish", index:this.dishesForMenu.length-1});
+  this.notifyObservers({type:"newDestination", index:this.favoriteDestinations.length-1});
 }
 
 //Removes dish with specified id from menu
-removeDishFromMenu(id) {
+removeDestinationFromFavorites(DestinationId) {
 
-  function matchingId(dish){
-    return dish.id !== id; //returns dishes that don't have the same id as the one we want to remove
+  function matchingId(destination){
+    return destination.DestinationId !== DestinationId; //returns dishes that don't have the same id as the one we want to remove
   }
   //create new array with all dishes that don't have the specific id we want to remove
-  this.dishesForMenu = this.dishesForMenu.filter(matchingId);
+  this.favoriteDestinations = this.favoriteDestinations.filter(matchingId);
 
   /*compose an "event" with the "removedDish" type and pass the new array */
-  this.notifyObservers({type:"removedDish", value: this.dishesForMenu})
+  this.notifyObservers({type:"removedDestination", value: this.favoriteDestinations})
 }
-getDish(id){
-  return fetch('http://sunset.nada.kth.se:8080/iprog2/group/15/recipes/' + id + '/information',{
+
+ getDestination(DestinationId){
+  return fetch(BASE_URL + "/apiservices/browseroutes/v1.0/US/USD/en-US/SFO-sky/ORD-sky/2020-09-01  /recipes/search?type=" + DestinationId + '/information',{
     headers: {
       'X-Mashape-Key': constants.API_KEY
     }
@@ -116,8 +95,8 @@ checkStatus(response) {
    * Do an API call to the search API endpoint.
    * @returns {Promise<any>}
    */
-  getAllDishes(type,query) {
-    const url = BASE_URL+ "/recipes/search?type=" + type + "&query=" + query;
+  getAllFlights(destination,date) {
+    const url = BASE_URL+ "/apiservices/browseroutes/v1.0/US/USD/en-US/SFO-sky/ORD-sky/2020-09-01" + destination + "&date=" + date;
     return fetch(url, httpOptions).then(this.processResponse);
   }
 
