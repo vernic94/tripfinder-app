@@ -3,17 +3,22 @@ import Flights from "./components/Flights";
 import * as constants from "./data/apiConfig";
 import { Link } from "react-router-dom";
 import "./index.css";
+import ListPlaces from "./components/ListPlaces";
 
 const SearchFlights = (props) => {
 
-  let [departureCity, setDepartureCity] = useState('');
-  let [arrivalCity, setArrivalCity] = useState('');
+  // let [departureCity, setDepartureCity] = useState('');
+  // let [arrivalCity, setArrivalCity] = useState('');
   let [departureDate, setDepartureDate] = useState('');
   let [returnDate, setReturnDate] = useState('');
-  const uriEncodedDepCity = encodeURIComponent(departureCity);
-  const uriEncodedArCity = encodeURIComponent(arrivalCity);
   let [responseObj, setResponseObj] = useState({});
+  let [error, setError] = useState(false);
+  let [loading, setLoading] = useState(false);
 
+  //date: new Date();
+  // function formatDate(date) {
+  //   return date.toLocaleDateString();
+  // }
   // our handler for the input's on change event
     // onNumberOfGuestsChanged = e => {
     //   this.props.model.setNumberOfGuests(e.target.value);
@@ -22,7 +27,19 @@ const SearchFlights = (props) => {
   function getFlights(e) {
     e.preventDefault();
 
-    fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/country=${props.responseObj.CountryName}/originplace=${props.responseObj.PlaceID}/destinationplace=${uriEncodedArCity}/outboundpartialdate=${departureDate}?inboundpartialdate=${returnDate}`, {
+    // if(city === ""){
+    //   return setError(true);
+    // }
+
+    // //clear state in preparation for new data
+    // setError(false);
+    setResponseObj({});
+    // setLoading(true);
+
+    // let uriEncodedDepCity = encodeURIComponent(departureCity);
+    // let uriEncodedArCity = encodeURIComponent(arrivalCity);
+
+    fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/country=${props.responseObj.CountryName}/originplace=${props.responseObj.PlaceID}/destinationplace=?/outboundpartialdate=${departureDate}?inboundpartialdate=${returnDate}`, {
       "method": "GET",
       "headers": {
         "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
@@ -31,30 +48,43 @@ const SearchFlights = (props) => {
     })
     .then(response => response.json())
     .then(response => {
-        setResponseObj(response)
+      if(response.cod !== 200){
+        throw new Error()
+      }
+        setResponseObj(response);
+        setLoading(false);
     })
     .catch(err => {
+      setError(true);
+      setLoading(false);
       console.log(err);
     });
     }
+
+    function getAirports(e) {
+       
+    }
+
+
     return (
       <div className="search">
         <h1 className="welcome-text">Where would you like to go?</h1>
        <form onSubmit={getFlights}>
-        <p>From 
+       <ListPlaces responseObj={responseObj} />
+        {/* <p>From 
           <input placeholder="Enter departure city or country" 
                   type="text"
                   value={departureCity}
-                  onChange={(e) => setDepartureCity(e.target.value)}>
+                  onChange={(e) => ListPlaces.setCity(e.target.value)}>
                   </input>
         To <input placeholder="Enter destination city or country" 
                   type="text"
                   value={arrivalCity}
-                  onChange={(e) => setArrivalCity(e.target.value)}>
+                  onChange={(e) => ListPlaces.setCity(e.target.value)}>
                   </input>
-        </p>
+        </p> */}
        <h4> Which days would you like to go?
-        <p> Depart <input placeholder="" 
+        <p> Depart <input placeholder=""
                     type="date"
                     value={departureDate}
                     onChange={(e) => setDepartureDate(e.target.value)}>

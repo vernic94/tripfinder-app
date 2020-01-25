@@ -26,10 +26,10 @@ function App(){
         <header className="App-header">
         {/* <h1 className="header">{this.state.title}</h1> */}
         <h1>Tripfinder</h1>
-        <main><ListPlaces /></main>
+        {/* <main><ListPlaces /></main> */}
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome} />
-          <Route exact path="/search" component={SearchFlights} />
+          <Route exact path="/search" component={SearchFlights, ListPlaces} />
           {/* <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
