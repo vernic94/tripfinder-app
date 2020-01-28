@@ -2,7 +2,6 @@
 import ObservableModel from "./ObservableModel";
 import * as constants from "./apiConfig";
 
-
 class Model extends ObservableModel {
   constructor() {
     super();
@@ -13,26 +12,21 @@ class Model extends ObservableModel {
     this.returnDate = "";
   }
 
-
   getNumberOfPassengers() {
     return this.numberOfPassengers;
   }
-
 
   getArrivalPlace() {
     return this.arrivalPlace;
   }
 
-
   getDeparturePlace() {
     return this.departurePlace;
   }
 
-
   getDepartureDate() {
     return this.departureDate;
   }
-
 
   getReturnDate() {
     return this.returnDate;
@@ -40,26 +34,23 @@ class Model extends ObservableModel {
 
   setNumberOfPassengers(num) {
     this.numberOfPassengers = num;
+    this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
-
 
   setArrivalPlace(place) {
     this.arrivalPlace = place;
     this.notifyObservers({action: "setArrivalPlace", value: place})
   }
 
-
   setDeparturePlace(place) {
     this.departurePlace = place;
     this.notifyObservers({action: "setDeparturePlace", value: place})
   }
 
-
   setDepartureDate(date) {
     this.departureDate = date;
     this.notifyObservers({action: "setDepartureDate", value: date})
   }
-
 
   setReturnDate(date) {
     this.returnDate = date;

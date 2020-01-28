@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../index.css";
 import ListPlaces from "./ListPlaces";
-import useInputPlaces from "./useInputPlaces";
+import Dates from "./Dates";
+import Flights from "./Flights";
+import Passengers from "./Passengers";
 
 // const SearchFlights = (props) => {
 function SearchFlights(props){
@@ -11,11 +13,31 @@ function SearchFlights(props){
   let [responseObj, setResponseObj] = useState({});
   let [error, setError] = useState(false);
   let [loading, setLoading] = useState(false);
+  let [inputDepValue, setInputDepValue] = useState("");
+  let [inputRetValue, setInputRetValue] = useState("");
 
-getFlights(e) {
+
+useEffect(() => {
+    props.model.addObserver(update);
+
+    return function cleanup() {
+        props.model.removeObserver(props);
+    };
+});
+
+function update(changes) {
+    if (changes.action === "setDepartureDate"){
+        setInputDepValue(changes.value)
+    }
+    if (changes.action === "setReturnDate"){
+        setInputRetValue(changes.value)
+    }
+}
+
+function getFlights(e) {
     e.preventDefault();
 
-    props.model.getFlights
+    props.model.getAllFlights()
     .then(response => {
         setResponseObj(response);
         setLoading(false);
@@ -32,31 +54,12 @@ getFlights(e) {
       <h1 className="welcome-text">Where would you like to go?</h1>
       <form onSubmit={getFlights}>
       <ListPlaces model={props.model} />
-      <h4> Which days would you like to go?
-      <p> Depart <input placeholder=""
-                  type="date"
-                  //value={props.modelInstance.getDepartureDate}
-                  onChange={(e) => props.model.setDepartureDate(e.target.value)}>
-                    </input> 
-      Return <input placeholder="" 
-                  type="date"
-                  //value={props.modelInstance.getReturnDate}
-                  onChange={(e) => props.model.setReturnDate(e.target.value)}>
-        </input>
-        </p>
-      </h4>
-      {/* <p>
-        Travellers
-        <input
-          type="number"
-          value={state.numberOfGuests}
-          onChange={onNumberOfGuestsChanged}
-        />
-      </p> */}
-
-        <button type="submit" className="button"> Search </button>
-        </form>
-        {/* <Flights responseObj={responseObj} /> */}
+      <h4> Which days would you like to go?</h4>
+      <Dates model={props.model} />
+      <Passengers model={props.model} />
+      <button type="submit" className="button"> Search </button>
+      </form>
+      {/* <Flights responseObj={responseObj} /> */}
     </div>
   );
 }

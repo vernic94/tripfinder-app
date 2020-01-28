@@ -21,11 +21,11 @@ const ListPlaces = (props) => {
     });
 
     function update(changes) {
-        if (changes.action == "setDeparturePlace"){
+        if (changes.action === "setDeparturePlace"){
             setAirportDepartureVisible(false);
             setInputDepValue(changes.value["PlaceId"])
         }
-        if (changes.action == "setArrivalPlace"){
+        if (changes.action === "setArrivalPlace"){
             setAirportArrivalVisible(false);
             setInputArrValue(changes.value["PlaceId"])
         }
@@ -51,7 +51,6 @@ const ListPlaces = (props) => {
         }
     }
 
-    
     function getListPlaces(city) {
        props.model.getAirports(city)
         .then(response => {
