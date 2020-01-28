@@ -1,103 +1,109 @@
+
 import ObservableModel from "./ObservableModel";
 import * as constants from "./apiConfig";
 
-const BASE_URL = constants.ENDPOINT;
-const httpOptions = {
-  headers: { "X-Mashape-Key": constants.API_KEY }
-};
 
 class Model extends ObservableModel {
   constructor() {
     super();
-    this._numberOfGuests = 1;
-    this.getNumberOfGuests();
+    this.numberOfPassengers = 1;
+    this.departurePlace = {};
+    this.arrivalPlace = {};
+    this.departureDate = "";
+    this.returnDate = "";
   }
 
-  /**
-   * Get the number of guests
-   * @returns {number}
-   */
-  getNumberOfGuests() {
-    return this._numberOfGuests;
+
+  getNumberOfPassengers() {
+    return this.numberOfPassengers;
   }
 
-  /**
-   * Set number of guests
-   * @param {number} num
-   */
-  setNumberOfGuests(num) {
-    this._numberOfGuests = num;
-    this.notifyObservers();
+
+  getArrivalPlace() {
+    return this.arrivalPlace;
   }
 
-//Returns all the dishes on the menu.
-getAllDestinations() {
-    return this.favoriteDestinations;
-}
 
-// //Returns all ingredients for all the dishes on the menu.
-// getAllIngredients() {
-//   //flat() removes empty slots in new array
-//    let dishIngredients = this.getFullMenu().map(dish => dish.extendedIngredients).flat();
-//    this.notifyObservers({type:"dishIngredients", value: dishIngredients});
-//   return dishIngredients;
-// }
-
-//Returns the total price of the flight
-getTotalPrice() {
-   let totalPrice = this.selectedFligth * this.getNumberOfGuests();
-   this.notifyObservers({type:"totalPrice", value: totalPrice});
-   return totalPrice;
-}
-
-//Adds the passed destination to favorite destinations.
-addDestinationToFavorits(destination) {
-  this.favoriteDestinations.push(destination);
-  
-  /*compose an "event" with the "new" type, and pass the index of a new dish*/
-  this.notifyObservers({type:"newDestination", index:this.favoriteDestinations.length-1});
-}
-
-//Removes dish with specified id from menu
-removeDestinationFromFavorites(DestinationId) {
-
-  function matchingId(destination){
-    return destination.DestinationId !== DestinationId; //returns dishes that don't have the same id as the one we want to remove
+  getDeparturePlace() {
+    return this.departurePlace;
   }
-  //create new array with all dishes that don't have the specific id we want to remove
-  this.favoriteDestinations = this.favoriteDestinations.filter(matchingId);
 
-  /*compose an "event" with the "removedDish" type and pass the new array */
-  this.notifyObservers({type:"removedDestination", value: this.favoriteDestinations})
-}
 
- getDestination(DestinationId){
-  return fetch(BASE_URL + "/apiservices/browseroutes/v1.0/US/USD/en-US/SFO-sky/ORD-sky/2020-09-01  /recipes/search?type=" + DestinationId + '/information',{
-    headers: {
-      'X-Mashape-Key': constants.API_KEY
+  getDepartureDate() {
+    return this.departureDate;
+  }
+
+
+  getReturnDate() {
+    return this.returnDate;
+  }
+
+  setNumberOfPassengers(num) {
+    this.numberOfPassengers = num;
+  }
+
+
+  setArrivalPlace(place) {
+    this.arrivalPlace = place;
+    this.notifyObservers({action: "setArrivalPlace", value: place})
+  }
+
+
+  setDeparturePlace(place) {
+    this.departurePlace = place;
+    this.notifyObservers({action: "setDeparturePlace", value: place})
+  }
+
+
+  setDepartureDate(date) {
+    this.departureDate = date;
+    this.notifyObservers({action: "setDepartureDate", value: date})
+  }
+
+
+  setReturnDate(date) {
+    this.returnDate = date;
+    this.notifyObservers({action: "setReturnDate", value: date})
+  }
+
+  getAirports(city){
+    return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/SE/SEK/en-GB/?query=${city}`, {
+    "method": "GET",
+    "headers": {
+        "x-rapidapi-host": constants.ENDPOINT,
+        "x-rapidapi-key": constants.API_KEY
+        }
+    })
+    .then(response => {
+      if(response.status !== 200){
+        throw new Error("failed to load airports")
+      }
+      return response.json();
+    })
+  }
+
+  getAllFlights(){
+
+    const depValue = this.departurePlace["PlaceId"];
+    const arrValue = this.arrivalPlace["PlaceId"];
+    
+    if(depValue == {} || arrValue == {} || this.departureDate == "" || this.returnDate == "") {
+      return Error("Missing values")
+    } else {
+      return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/SE/SEK/en-SE/${depValue}/${arrValue}/${this.departureDate}/${this.returnDate}`, {
+        "method": "GET",
+        "headers": {
+          "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+          "x-rapidapi-key": constants.API_KEY
+        }
+      })
+      .then(response => {
+        if(response.status !== 200){
+          throw new Error("failed to load flights")
+        }
+          return response.json();
+      })
     }
-  }).then(response => {
-    this.checkStatus(response)
-    return response.json()
-  });
-}
-
-checkStatus(response) {
-  if(response.status === 200) {
-    return
-  }
-  else {
-    console.log('ERROR');
-  }
-}
-
-  /**
-   * Do an API call to the search API endpoint.
-   * @returns {Promise<any>}
-   */
-  getAllFlights(destination,date) {
-    const url = BASE_URL+ "/apiservices/browseroutes/v1.0/US/USD/en-US/SFO-sky/ORD-sky/2020-09-01" + destination + "&date=" + date;
-    return fetch(url, httpOptions).then(this.processResponse);
   }
 
   processResponse(response) {

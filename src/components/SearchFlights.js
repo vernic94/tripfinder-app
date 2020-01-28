@@ -12,11 +12,10 @@ function SearchFlights(props){
   let [error, setError] = useState(false);
   let [loading, setLoading] = useState(false);
 
-  function showFlights(e) {
+getFlights(e) {
     e.preventDefault();
 
-    setLoading(true);
-    props.model.getAllFlights()
+    props.model.getFlights
     .then(response => {
         setResponseObj(response);
         setLoading(false);
@@ -27,13 +26,11 @@ function SearchFlights(props){
       console.log(err);
     });
   }
-console.log(responseObj);
-  //let flightList = null;
-  return (
 
+  return (
     <div className="search">
       <h1 className="welcome-text">Where would you like to go?</h1>
-      {/* <form onSubmit={showFlights}> */}
+      <form onSubmit={getFlights}>
       <ListPlaces model={props.model} />
       <h4> Which days would you like to go?
       <p> Depart <input placeholder=""
@@ -56,8 +53,9 @@ console.log(responseObj);
           onChange={onNumberOfGuestsChanged}
         />
       </p> */}
-        <button className="button" onClick={(e) => showFlights(e)}> Search </button>
-        {/* </form> */}
+
+        <button type="submit" className="button"> Search </button>
+        </form>
         {/* <Flights responseObj={responseObj} /> */}
     </div>
   );

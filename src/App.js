@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from "react-router-dom";
 import Welcome from "./Welcome";
-import SearchFlights from './SearchFlights';
-import Destinations from "./Destinations";
-import modelInstance from "./data/Model";
-import apiConfig from "./data/apiConfig";
+import SearchFlights from './components/SearchFlights';
 import "./index.css";
-import ListPlaces from "./components/ListPlaces";
-
-import logo from './logo.svg';
 import './App.css';
-import { render } from '@testing-library/react';
+import modelInstance from "./data/Model"
 
 // class App extends Component {
 //   constructor(props) {
@@ -28,8 +22,8 @@ function App(){
         <h1>Tripfinder</h1>
         {/* <main><ListPlaces /></main> */}
           {/* We rended diffrent component based on the path */}
-          <Route exact path="/" component={Welcome} />
-          <Route exact path="/search" component={SearchFlights, ListPlaces} />
+          <Route exact path="/" component={Welcome}  />
+          <Route exact path="/search" render={() => <SearchFlights model={modelInstance}/>} />
           {/* <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
