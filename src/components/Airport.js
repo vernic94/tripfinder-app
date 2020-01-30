@@ -6,9 +6,9 @@ const airports = (props) => {
       <p onClick={() => props.changePlace(item)}>City: {item["PlaceName"]} - Airport: {item["PlaceId"]}</p>
     );
     return( 
-            <div>
-                {items}
-            </div>
+        <div>
+            {items}
+        </div>
     );
 }
 

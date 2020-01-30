@@ -10,6 +10,10 @@ class Model extends ObservableModel {
     this.arrivalPlace = {};
     this.departureDate = "";
     this.returnDate = "";
+    this.flightsData = [];
+    // this.state = {
+    //   setFlights: {},
+    // }
   }
 
   getNumberOfPassengers() {
@@ -73,35 +77,24 @@ class Model extends ObservableModel {
     })
   }
 
-  getAllFlights(){
-
+  getAllFlights() {
     const depValue = this.departurePlace["PlaceId"];
     const arrValue = this.arrivalPlace["PlaceId"];
-    
-    if(depValue == {} || arrValue == {} || this.departureDate == "" || this.returnDate == "") {
-      return Error("Missing values")
-    } else {
-      return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/SE/SEK/en-SE/${depValue}/${arrValue}/${this.departureDate}/${this.returnDate}`, {
-        "method": "GET",
-        "headers": {
-          "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-          "x-rapidapi-key": constants.API_KEY
-        }
-      })
-      .then(response => {
-        if(response.status !== 200){
-          throw new Error("failed to load flights")
-        }
-          return response.json();
-      })
-    }
-  }
-
-  processResponse(response) {
-    if (response.ok) {
-      return response.json();
-    }
-    throw response;
+   
+    console.log(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/SE/SEK/en-SE/${depValue}/${arrValue}/${this.departureDate}/${this.returnDate}`)
+    return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/SE/SEK/en-SE/${depValue}/${arrValue}/${this.departureDate}/${this.returnDate}`, 
+    {
+      "method": "GET",
+      "headers": {
+        "x-rapidapi-host": constants.ENDPOINT,
+        "x-rapidapi-key": constants.API_KEY
+      }
+    }).then(response => {
+      if(response.status !== 200){
+        throw new Error("failed to load flights")
+      }
+      return response.json()
+    })
   }
 }
 

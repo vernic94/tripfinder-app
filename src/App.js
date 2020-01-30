@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from "react-router-dom";
 import Welcome from "./Welcome";
+import Flights from "./components/Flights";
 import SearchFlights from './components/SearchFlights';
 import "./index.css";
 import './App.css';
@@ -24,6 +25,7 @@ class App extends Component {
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome}  />
           <Route exact path="/search" render={() => <SearchFlights model={modelInstance}/>} />
+          <Route exact path="/flights" render={() => <Flights model= {modelInstance}/>}/>
           {/* <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.

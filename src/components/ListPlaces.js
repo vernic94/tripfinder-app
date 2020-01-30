@@ -10,7 +10,7 @@ const ListPlaces = (props) => {
     let [arrivalDestinations, setArrivalDestinations] = useState([]);
     let [airportArrivalVisible, setAirportArrivalVisible] = useState(false);
     let [inputArrValue, setInputArrValue] = useState("");
-
+    let [responseAirports, setResponseAirports] = useState({});
 
     useEffect(() => {
         props.model.addObserver(update);
@@ -30,8 +30,6 @@ const ListPlaces = (props) => {
             setInputArrValue(changes.value["PlaceId"])
         }
     }
-    
-    let [responseAirports, setResponseAirports] = useState({});
 
     function getDepartureDestinations(city) {
         setAirportDepartureVisible(true);
@@ -74,7 +72,6 @@ const ListPlaces = (props) => {
             <p>
             From <input placeholder="Enter departure city or country" 
                     type="text"
-                    // id="departurePlace"
                     value={inputDepValue}
                     onChange={(e) => getDepartureDestinations(e.target.value)}
                    >
@@ -83,15 +80,12 @@ const ListPlaces = (props) => {
             
             To <input placeholder="Enter destination city or country" 
                     type="text"
-                    // id="arrivalPlace"
                     value={inputArrValue}
                     onChange={(e) => getArrivalDestinations(e.target.value)}
                    >
                 </input>
                 {airportArrivalVisible ? <Airport places={arrivalDestinations} changePlace={changeArrivalPlace}></Airport> : null }
             </p>           
-            {/* <button onClick={getListPlaces}> Get Places</button> */}
-            {/* <Places responseObj={responseObj} /> */}
         </div>
     );
 }

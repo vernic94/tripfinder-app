@@ -1,27 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
-const flights = (props) => {
-  
-    let items = props.places.map((item, key) => 
-    <p onClick={() => props.changePlace(item)}>City: {item["PlaceName"]} - Airport: {item["PlaceId"]}</p>
+const Flights = (props) => {
+
+    // let [responseFlights, setResponseFlights] = useState({});
+    // let [error, setError] = useState(false);
+   let [loading, setLoading] = useState(false);
+   
+
+    // let flightInfo = null;
+    // switch(useState()){
+    //     case loading:
+    //         flightInfo = <em>Loading...</em>
+    //         break;
+    //     // case !loading:
+    //     default:
+    //         flightInfo = responseFlights.map((flight) =>
+    //    <p> City: {flight["PlaceName"]} - Airport: {flight["PlaceId"]} - Time: {flight.date}}</p>
+    //    ); 
+    //    console.log(responseFlights)
+    //         break;
+    //     // default:
+    //     //    flightInfo = <b>Failed to load data, please try again</b>;
+    //     //    break;
+    // }
+    return(  
+        <div>
+            {/* {loading ? <p>...Loading</p> : <div> {responseFlights.map((flight, key) => 
+            <p>Departure City: {flight["Quotes"].flight["Places"].flight["Name"], key["Quotes"].key["OutboundLeg"].key["OriginId"]} ->  
+            Destination ciity: {flight["Quotes"].flight["Places"].flight["Name"], key["Quotes"].key["OutboundLeg"].key["DestinationId"]}
+            </p>)}</div> } */}
+        </div>
         );
-    return( 
-          <div>
-              {items}
-          </div>
-    );
-}
-    //return(  
-        // <div>
-        //     {props.responseObj.cod === 200 ?
-            // <div>
-            //     <p><strong>Country: {props.responseObj.CountryName}</strong></p>
-            //     <p><strong>PlaceName: {props.responseObj.PlaceName}</strong></p>
-            //     <p><strong>Airport id: {props.responseObj.PlaceID}</strong></p>
-            // </div>
-        //     :null
-        //     }
-        // </div>
+    }
 
-
-export default flights;
+export default Flights;
