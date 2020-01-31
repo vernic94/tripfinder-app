@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 
-const Flights = (props) => {
+const Flights = ({flightQuotes}) => {
 
     // let [responseFlights, setResponseFlights] = useState({});
     // let [error, setError] = useState(false);
-   let [loading, setLoading] = useState(false);
+   //let [loading, setLoading] = useState(false);
    
 
     // let flightInfo = null;
@@ -23,14 +23,20 @@ const Flights = (props) => {
     //     //    flightInfo = <b>Failed to load data, please try again</b>;
     //     //    break;
     // }
-    return(  
-        <div>
-            {/* {loading ? <p>...Loading</p> : <div> {responseFlights.map((flight, key) => 
-            <p>Departure City: {flight["Quotes"].flight["Places"].flight["Name"], key["Quotes"].key["OutboundLeg"].key["OriginId"]} ->  
-            Destination ciity: {flight["Quotes"].flight["Places"].flight["Name"], key["Quotes"].key["OutboundLeg"].key["DestinationId"]}
-            </p>)}</div> } */}
-        </div>
+
+
+  //  let flights = props.flightQuotes.map((flight, key) => 
+//        <p>Departure City: {flight.map(), key["QuoteId"]} ->  
+        {/* Destination ciity: {flight["Quotes"].flight["Places"].flight["Name"], key["Quotes"].key["OutboundLeg"].key["DestinationId"]} */}
+    //    </p>
+    //   );
+        return( 
+            <div>
+                <p>{JSON.stringify(flightQuotes)}</p>
+                <p>Hellooo</p>
+            </div>
         );
-    }
+    
+}
 
 export default Flights;
