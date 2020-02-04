@@ -40,14 +40,43 @@ import Flights from "./Flights";
     }
 
     function flightMapping(){
-      let flightQuotes = responseFlights["Quotes"].map(quotes => 
-       quotes["OutboundLeg"])
+      let quotesMinPrice = responseFlights["Quotes"].map(quotes =>
+        quotes["MinPrice"]);
+      let quoteId = responseFlights["Quotes"].map(quotes =>
+        quotes["QuoteId"]);
+      let outboundQuotes = responseFlights["Quotes"].map(quotes => 
+       quotes["OutboundLeg"]);
+      let destId = outboundQuotes.map(info => info["DestinationId"]);
+      let depDate = outboundQuotes.map(info => info["DepartureDate"]);
+      let originIddep = outboundQuotes.map(info => info["OriginId"]);
 
-      let destData = flightQuotes.map(info => info["DestinationId"])
+      let inboundQuotes = responseFlights["Quotes"].map(quotes => 
+        quotes["InboundLeg"]);
+      let returndestId = inboundQuotes.map(info => info["DestinationId"]);
+      let originIdreturn = inboundQuotes.map(info => info["OriginId"]);
+      let returnDate = inboundQuotes.map(info => info["DepartureDate"]);
 
-        console.log(destData)
+      let places = responseFlights["Places"].map(info =>
+        (info["PlaceId"], info["IataCode"], info["Name"], info["CountryName"]));
+
+      let carriers = responseFlights["Carriers"].map(info =>
+        info["Name"]);
+
+        console.log(quotesMinPrice)
       return (
-        flightQuotes
+        <div>
+          <ul> 
+            <div>
+              <p>{quoteId}</p>
+              From
+              <p>{destId}{depDate}{places}</p>
+              to
+              <p>{returndestId}{returnDate}{places}</p>
+              {carriers}
+              <p>Price: {quotesMinPrice}</p>
+            </div>
+          </ul>
+        </div>
       );
     }
 
