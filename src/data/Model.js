@@ -11,6 +11,7 @@ class Model extends ObservableModel {
     this.departureDate = "";
     this.returnDate = "";
     this.flightsData = [];
+    this.doOnce = true;
   }
 
   getNumberOfPassengers() {
@@ -40,11 +41,14 @@ class Model extends ObservableModel {
 
   setArrivalPlace(place) {
     this.arrivalPlace = place;
+    localStorage.setItem("cityArr", place["PlaceId"]);
     this.notifyObservers({action: "setArrivalPlace", value: place})
   }
 
-  setDeparturePlace(place) {
+  setDeparturePlace(place) {    
     this.departurePlace = place;
+    console.log(place);
+    localStorage.setItem("cityDet", place["PlaceId"]);         
     this.notifyObservers({action: "setDeparturePlace", value: place})
   }
 
