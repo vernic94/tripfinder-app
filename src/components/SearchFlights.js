@@ -2,40 +2,46 @@ import "../index.css";
 import ListPlaces from "./ListPlaces";
 import Dates from "./Dates";
 import Passengers from "./Passengers";
-//import { useHistory } from "react-router-dom";
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Flights from "./Flights";
+import { Link } from "react-router-dom";
 
-//  function SearchFlights(props){
   const SearchFlights = (props) => {
 
-
-  //let flight = null;
-  //const history = useHistory();
-  //let flightData = [];
   let [responseFlights, setResponseFlights] = useState({});
   let [flightQuotes, setFlightQuotes] = useState([]);
   let [flightPlaces, setFlightPlaces] = useState([]);
   let [flightCarriers, setFlightCarriers] = useState([]);
+  let [flightCurrencies, setFlightCurrencies] = useState([]);
   let [showFlights, setShowFlights ] = useState(false);
-    //history.push("/flights");
-    // useEffect(() => {
-        //}, []);
+  let [error, setError] = useState(false);
+  let [loading, setLoading] = useState(false);
 
     function handleOnClick() {
-      setShowFlights(true);
+      
       getResponseFlights();
-      if (responseFlights["Quotes"]) {
-        setFlightQuotes(responseFlights["Quotes"]);
+    
+      if(responseFlights !== []){
+        setShowFlights(true);
+        setLoading(true)
+        if (responseFlights["Quotes"]) {
+          setFlightQuotes(responseFlights["Quotes"]);
+        }
+        if (responseFlights["Places"]) {
+          setFlightPlaces(responseFlights["Places"]);
+        }
+        if (responseFlights["Carriers"]) {
+          setFlightCarriers(responseFlights["Carriers"]);
+        }
+        if(responseFlights[ "Currencies"]){
+          setFlightCurrencies(responseFlights["Currencies"])
+        }
       }
-      if (responseFlights["Places"]) {
-        setFlightPlaces(responseFlights["Places"]);
-      }
-      if (responseFlights["Carriers"]) {
-        setFlightCarriers(responseFlights["Carriers"]);
+      else{
+        setShowFlights(false)
+        setError(true)
       }
     }
-    
     
     function getResponseFlights(){
       props.model.getAllFlights()
@@ -50,6 +56,9 @@ import Flights from "./Flights";
   return (
     
     <div className="search">
+      <Link to = "/savedSearches">
+      <button className="button"> Saved flights </button>
+      </Link>
       <h1 className="welcome-text">Where would you like to go?</h1>
   
       <ListPlaces model={props.model} />
@@ -58,19 +67,8 @@ import Flights from "./Flights";
       <Passengers model={props.model} />
      
       <button className="button" onClick={handleOnClick}> Search </button>
-      {showFlights ? <Flights quotes={flightQuotes} places={flightPlaces} carriers = {flightCarriers}/> : null}
-      {/* { <Flights  flightQuotes = {flightMapping} /> } */}
-      {/* {<Flights flightQuotes = {flightData["Quotes"].map((quotes, key) => 
-          {quotes["OutboundLeg"].map((info,key) => {info["DestinationId"], info["DepartureDate"], key["OriginId"]}), key["QuoteId"]}
-        )} />} */}
-      
-       {/* {flightData.map(flight => (
-        <Flights 
-        key={JSON.stringify(flight["Quotes"].flight["QuoteId"])}
-        depAirport={flight.Quotes.Places.Name}
-        arrAirport={flight.Quotes.Places.Name}
-        />
-      ))} */}
+      {showFlights ? <Flights quotes={flightQuotes} places={flightPlaces} carriers = {flightCarriers} currencies={flightCurrencies}/> : null}
+     
     </div>
   );
 }

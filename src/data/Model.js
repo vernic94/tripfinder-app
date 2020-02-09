@@ -58,6 +58,8 @@ class Model extends ObservableModel {
     this.notifyObservers({action: "setReturnDate", value: date})
   }
 
+  
+
   getAirports(city){
     return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/SE/SEK/en-GB/?query=${city}`, {
     "method": "GET",
@@ -77,7 +79,7 @@ class Model extends ObservableModel {
   getAllFlights() {
     const depValue = this.departurePlace["PlaceId"];
     const arrValue = this.arrivalPlace["PlaceId"];
-   
+   console.log(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/SE/SEK/en-SE/${depValue}/${arrValue}/${this.departureDate}/${this.returnDate}`)
     return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/SE/SEK/en-SE/${depValue}/${arrValue}/${this.departureDate}/${this.returnDate}`, 
     {
       "method": "GET",

@@ -3,7 +3,7 @@ import "../index.css";
 
 const Passengers = (props) => {
  
-  let [numberOfPassengers, getNumberOfPassengers] = useState("");
+  let [numberOfPassengers, getNumberOfPassengers] = useState("1");
 
 useEffect(() => {
     props.model.addObserver(update);

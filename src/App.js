@@ -7,6 +7,7 @@ import "./index.css";
 import './App.css';
 import modelInstance from "./data/Model"
 import { Component } from "react";
+import SavedSearches from './components/SavedSearches';
 
 class App extends Component {
   constructor(props) {
@@ -15,29 +16,20 @@ class App extends Component {
       title: "Tripfinder"
     };
   }
-// function App(){
+
   render(){
     return (
+
       <div className="App">
         <header className="App-header">
         <h1 className="header">{this.state.title}</h1>
-        {/* <h1>Tripfinder</h1> */}
+     
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome}  />
           <Route exact path="/search" render={() => <SearchFlights model={modelInstance}/>} />
           <Route exact path="/flights" render={() => <Flights model= {modelInstance}/>}/>
-          {/* <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a> */}
+          <Route exact path="/savedSearches" render={() => <SavedSearches model={modelInstance}/>} />
+         
         </header>
       </div>
     );
