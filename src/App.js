@@ -1,45 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route } from "react-router-dom";
 import Welcome from "./Welcome";
-import modelInstance from "./data/Model";
-import apiConfig from "./data/apiConfig";
+import Flights from "./components/Flights";
+import SearchFlights from './components/SearchFlights';
 import "./index.css";
-
-import logo from './logo.svg';
 import './App.css';
+import modelInstance from "./data/Model"
+import { Component } from "react";
+import SavedSearches from './components/SavedSearches';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "Trip finder!"
+      title: "Tripfinder"
     };
   }
 
-  render() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      <h1 className="header">{this.state.title}</h1>
-        {/* We rended diffrent component based on the path */}
-        <Route exact path="/" component={Welcome} />
+  render(){
+    return (
 
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-      </header>
-    </div>
-  );
-}
+      <div className="App">
+        <header className="App-header">
+        <h1 className="header">{this.state.title}</h1>
+     
+          {/* We rended diffrent component based on the path */}
+          <Route exact path="/" component={Welcome}  />
+          <Route exact path="/search" render={() => <SearchFlights model={modelInstance}/>} />
+          <Route exact path="/flights" render={() => <Flights model= {modelInstance}/>}/>
+          <Route exact path="/savedSearches" render={() => <SavedSearches model={modelInstance}/>} />
+         
+        </header>
+      </div>
+    );
+  }
 }
 
 export default App;

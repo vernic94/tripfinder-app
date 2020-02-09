@@ -9,7 +9,7 @@ class ObservableModel {
   
     notifyObservers(changeDetails) {
       this._observers.forEach(observer => {
-        observer.update(this, changeDetails);
+        observer(changeDetails);
       });
     }
   
