@@ -6,10 +6,10 @@ const ListPlaces = (props) => {
     //declare new state variables [current state, method to update the state]
     let [departureDestinations, setDepartureDestinations] = useState([]);
     let [airportDepartureVisible, setAirportDepartureVisible] = useState(false);
-    let [inputDepValue, setInputDepValue] = useState(citynameReload("cityDet"));
+    let [inputDepValue, setInputDepValue] = useState("");
     let [arrivalDestinations, setArrivalDestinations] = useState([]);
     let [airportArrivalVisible, setAirportArrivalVisible] = useState(false);
-    let [inputArrValue, setInputArrValue] = useState(citynameReload("cityArr"));
+    let [inputArrValue, setInputArrValue] = useState("");
     let [responseAirports, setResponseAirports] = useState({});
 
     useEffect(() => {
@@ -21,16 +21,16 @@ const ListPlaces = (props) => {
     });
 
     //Localstorage behövs för att få ut rätt namn vid tidigare senaste inmatning
-    function citynameReload(locCity){
-        let loc = localStorage.getItem(locCity);        
-        console.log(loc);
-        if (loc){            
-            return loc;
-        }
-        else{
-            return "";
-        }
-    }
+    // function citynameReload(locCity){
+    //     let loc = localStorage.getItem(locCity);        
+    //     console.log(loc);
+    //     if (loc){            
+    //         return loc;
+    //     }
+    //     else{
+    //         return "";
+    //     }
+    // }
 
 
 
