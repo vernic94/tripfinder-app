@@ -1,34 +1,36 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import Flights from "./Flights";
 
 const PurchaseView = (props) => {
 
-//     let boughtFlight = (  
-//         <div>
-//              <div>
-//                <p> From: {props.chosenFlight.source["Name"]} - {props.chosenFlight.source["IataCode"]}</p>
-//                <p>{props.chosenFlight.departureDate}</p>
-//                <p>{props.chosenFlight.outboundCarrier["Name"]}</p>
-//             </div>
-//             <div>
-//                <p>To: {props.chosenFlight.destination["Name"]} - {props.chosenFlight.destination["IataCode"]}</p>
-//                <p>{props.chosenFlight.returnDate}</p>
-//                <p>{props.chosenFlight.inboundCarrier["Name"]}</p>
-//              </div>
-//              <div>
-//                 <p>Price: {props.chosenFlight.price} {props.chosenFlight.currency["Code"]}</p>
-//                 <Link to="/search">
-//                 <button className="button"> Back to search</button>
-//                 </Link>
-//              </div>
-//              </div>
-//         );
-// console.log(boughtFlight)
+    let boughtFlight = props.chosenFlight.map(flight=>
+          (
+              <div>
+                  <div>
+                   <p> From: {flight.source["Name"]} - {flight.source["IataCode"]}</p>
+                   <p>{flight.departureDate}</p>
+                   <p>{flight.outboundCarrier["Name"]}</p>
+                </div>
+                <div>
+                   <p>To: {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
+                   <p>{flight.returnDate}</p>
+                   <p>{flight.inboundCarrier["Name"]}</p>
+                 </div>
+                 <div>
+                    <p>Price: {flight.price} {flight.currency["Code"]}</p>
+                <Link to="/search">
+                <button className="button"> Back to search</button>
+                </Link>
+             </div>
+             </div>
+        ));
+
+console.log("boughtflight in purchase",boughtFlight)
 
 return(
     <div>
-       {props.chosenFlight}
+        <p>here is the flight</p>
+        {boughtFlight}
     </div>
   );
 }

@@ -67,7 +67,7 @@ import { Link } from "react-router-dom";
       <Passengers model={props.model} />
      
       <button className="button" onClick={handleOnClick}> Search </button>
-      {showFlights ? <Flights quotes={flightQuotes} places={flightPlaces} carriers = {flightCarriers} currencies={flightCurrencies}/> : null}
+      {showFlights ? <Flights model={props.model} quotes={flightQuotes} places={flightPlaces} carriers = {flightCarriers} currencies={flightCurrencies}/> : null}
      
     </div>
   );

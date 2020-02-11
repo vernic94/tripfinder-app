@@ -62,7 +62,11 @@ class Model extends ObservableModel {
     this.notifyObservers({action: "setReturnDate", value: date})
   }
 
-  
+  //  getSelectedFlight(id) {
+  //   let selectedFlight = flightInfo.filter(flight => flight.quoteId === id);
+  //   this.notifyObservers({action: "setSelectedFlight", value: selectedFlight});
+  //   return selectedFlight;
+  // }
 
   getAirports(city){
     return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/SE/SEK/en-GB/?query=${city}`, {

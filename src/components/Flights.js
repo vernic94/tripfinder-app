@@ -4,17 +4,26 @@ import PurchaseView from './PurchaseView';
 
  const Flights = (props) => {
 
+    let [boughtFlightId , setBoughtFlightId] = useState({});
     let [boughtFlight , setBoughtFlight] = useState({});
     let [buyFlight, setBuyFlight] = useState(false);
+    let [confirmPurchase, setConfirmPurchase] = useState(false);
 
     function saveFlight(flight){
-        console.log(flight)
+       // console.log(flight)
     }
 
-    function chooseFlight(flight){
-        console.log(flight)
+   function getSelectedFlight(id) {
+        let selectedFlight = flightInfo.filter(flight => id == flight.quoteId);
+        if(selectedFlight !== []){
+            setBoughtFlight(selectedFlight);
+        }
+   }
+
+    function chooseFlight(e){
+        getSelectedFlight(e.target.id); 
         setBuyFlight(true);
-        setBoughtFlight(flight);
+        setConfirmPurchase(true);
     }
  
     let flightInfo = props.quotes.map(flight =>
@@ -26,14 +35,16 @@ import PurchaseView from './PurchaseView';
             returnDate: flight["InboundLeg"]["DepartureDate"],
             outboundCarrier: props.carriers.find(carrier => carrier["CarrierId"] === flight["OutboundLeg"]["CarrierIds"][0]),
             inboundCarrier: props.carriers.find(carrier => carrier["CarrierId"] === flight["InboundLeg"]["CarrierIds"][0]),
-            currency: props.currencies[0]
-        }));    
-        console.log("flightinfo:"+ flightInfo)
+            currency: props.currencies[0],
+            quoteId: flight["QuoteId"] -1,
+    }));    
+        
+        console.log("flightinfo:", flightInfo)
 
     let flights = flightInfo.map(function (flight, index) {
             return  (       
-              <React.Fragment key={index}>
-                 <div>
+              <div key={index}>
+                  <div>
                    <p> From: {flight.source["Name"]} - {flight.source["IataCode"]}</p>
                    <p>{flight.departureDate}</p>
                    <p>{flight.outboundCarrier["Name"]}</p>
@@ -47,18 +58,24 @@ import PurchaseView from './PurchaseView';
                     <p>Price: {flight.price} {flight.currency["Code"]}</p>
                     <button className="button" onClick={saveFlight(flight)}> Save</button>
                    
-                    <button className="button" onClick={chooseFlight}> Buy</button>
-                    {buyFlight ? <PurchaseView chosenFlight={boughtFlight}/> : null}
-                  
+                    <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>
+                    
                  </div>
-                 </React.Fragment>
+               </div>
             )
         });
-    console.log("flights:"+flights)
+        console.log("flights:",flights)
 
     return(
         <div>
            {flights}
+          
+           {buyFlight ? <PurchaseView model = {props.model} chosenFlight={boughtFlight} /> : null}
+           {/* {confirmPurchase ? 
+            <Link to ="/purchase">
+            <button className="button"> Confirm Purchase</button> 
+            </Link> 
+           : null} */}
         </div>
       );
  
