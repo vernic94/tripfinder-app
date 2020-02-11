@@ -11,6 +11,7 @@ class Model extends ObservableModel {
     this.departureDate = "";
     this.returnDate = "";
     this.flightsData = [];
+    this.selectedFlight = [];
     //this.doOnce = true;
   }
 
@@ -33,6 +34,10 @@ class Model extends ObservableModel {
   getReturnDate() {
     return this.returnDate;
   }
+
+  getSelectedFlight() {
+    return this.selectedFlight;
+  }  
 
   setNumberOfPassengers(num) {
     this.numberOfPassengers = num;
@@ -62,11 +67,11 @@ class Model extends ObservableModel {
     this.notifyObservers({action: "setReturnDate", value: date})
   }
 
-  //  getSelectedFlight(id) {
-  //   let selectedFlight = flightInfo.filter(flight => flight.quoteId === id);
-  //   this.notifyObservers({action: "setSelectedFlight", value: selectedFlight});
-  //   return selectedFlight;
-  // }
+  setSelectedFlight(selectedFlight){
+    this.selectedFlight = selectedFlight;
+    this.notifyObservers({action: "setSelectedFlight", value: selectedFlight})
+  }
+
 
   getAirports(city){
     return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/SE/SEK/en-GB/?query=${city}`, {

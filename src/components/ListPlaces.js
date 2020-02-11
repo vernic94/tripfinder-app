@@ -32,8 +32,6 @@ const ListPlaces = (props) => {
     //     }
     // }
 
-
-
     function update(changes) {
         if (changes.action === "setDeparturePlace"){
             setAirportDepartureVisible(false);

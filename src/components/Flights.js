@@ -1,28 +1,23 @@
 import React, {useState} from 'react';
 import { Link } from "react-router-dom";
-import PurchaseView from './PurchaseView';
 
  const Flights = (props) => {
 
-    let [boughtFlightId , setBoughtFlightId] = useState({});
-    let [boughtFlight , setBoughtFlight] = useState({});
-    let [buyFlight, setBuyFlight] = useState(false);
     let [confirmPurchase, setConfirmPurchase] = useState(false);
 
     function saveFlight(flight){
        // console.log(flight)
     }
 
-   function getSelectedFlight(id) {
+    function getFlight(id) {
         let selectedFlight = flightInfo.filter(flight => id == flight.quoteId);
         if(selectedFlight !== []){
-            setBoughtFlight(selectedFlight);
+            props.model.setSelectedFlight(selectedFlight);
         }
-   }
+    }
 
     function chooseFlight(e){
-        getSelectedFlight(e.target.id); 
-        setBuyFlight(true);
+        getFlight(e.target.id); 
         setConfirmPurchase(true);
     }
  
@@ -45,21 +40,19 @@ import PurchaseView from './PurchaseView';
             return  (       
               <div key={index}>
                   <div>
-                   <p> From: {flight.source["Name"]} - {flight.source["IataCode"]}</p>
+                   <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
                    <p>{flight.departureDate}</p>
                    <p>{flight.outboundCarrier["Name"]}</p>
                 </div>
                 <div>
-                   <p>To: {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
+                   <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
                    <p>{flight.returnDate}</p>
                    <p>{flight.inboundCarrier["Name"]}</p>
                  </div>
                  <div>
-                    <p>Price: {flight.price} {flight.currency["Code"]}</p>
+                    <p><strong>Price:</strong> {flight.price} {flight.currency["Code"]}</p>
                     <button className="button" onClick={saveFlight(flight)}> Save</button>
-                   
-                    <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>
-                    
+                    <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>        
                  </div>
                </div>
             )
@@ -69,13 +62,11 @@ import PurchaseView from './PurchaseView';
     return(
         <div>
            {flights}
-          
-           {buyFlight ? <PurchaseView model = {props.model} chosenFlight={boughtFlight} /> : null}
-           {/* {confirmPurchase ? 
+           {confirmPurchase ? 
             <Link to ="/purchase">
             <button className="button"> Confirm Purchase</button> 
             </Link> 
-           : null} */}
+           : null}
         </div>
       );
  
