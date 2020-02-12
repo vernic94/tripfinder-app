@@ -50,7 +50,7 @@ import { Link } from "react-router-dom";
                    <p>{flight.inboundCarrier["Name"]}</p>
                  </div>
                  <div>
-                    <p><strong>Price:</strong> {flight.price} {flight.currency["Code"]}</p>
+                    <p><strong>Price per person:</strong> {flight.price} {flight.currency["Code"]}</p>
                     <button className="button" onClick={saveFlight(flight)}> Save</button>
                     <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>        
                  </div>

@@ -17,10 +17,7 @@ const PurchaseView = (props) => {
                    <p>{flight.inboundCarrier["Name"]}</p>
                  </div>
                  <div>
-                    <p><strong>Price:</strong> {flight.price} {flight.currency["Code"]}</p>
-                <Link to="/search">
-                <button className="button"> Back to search</button>
-                </Link>
+                    <p><strong>Total Price:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
              </div>
              </div>
         ));
@@ -29,6 +26,9 @@ console.log("boughtflight in purchase",boughtFlight)
 
 return(
     <div>
+        <Link to="/search">
+          <button className="button"> Back to search</button>
+        </Link>
         <h1>You're all set!</h1>
         <h3><i>Time to pack your bags!</i></h3>
         <h3> Here's your flight information: </h3>
