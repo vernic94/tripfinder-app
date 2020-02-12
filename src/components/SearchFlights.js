@@ -8,49 +8,49 @@ import { Link } from "react-router-dom";
 
   const SearchFlights = (props) => {
 
-  let [responseFlights, setResponseFlights] = useState({});
-  let [flightQuotes, setFlightQuotes] = useState([]);
-  let [flightPlaces, setFlightPlaces] = useState([]);
-  let [flightCarriers, setFlightCarriers] = useState([]);
-  let [flightCurrencies, setFlightCurrencies] = useState([]);
+  //let responseFlights = {};
+  
+  // let [responseFlights, setResponseFlights] = useState({});
+  // let [flightQuotes, setFlightQuotes] = useState([]);
+  // let [flightPlaces, setFlightPlaces] = useState([]);
+  // let [flightCarriers, setFlightCarriers] = useState([]);
+  // let [flightCurrencies, setFlightCurrencies] = useState([]);
+  // let [flightCurrencies, setFlightCurrencies] = useState();
   let [showFlights, setShowFlights ] = useState(false);
-  let [error, setError] = useState(false);
-  let [loading, setLoading] = useState(false);
+  // let [error, setError] = useState(false);
+  // let [loading, setLoading] = useState(false);
+  // let flag = true;
+
+  function wait(ms)
+  {
+  var d = new Date();
+  var d2 = null;
+  do { d2 = new Date(); }
+  while(d2-d < ms);
+  }
+  
 
     function handleOnClick() {
       
-      getResponseFlights();
-    
-      if(responseFlights !== []){
-        setShowFlights(true);
-        setLoading(true)
-        if (responseFlights["Quotes"]) {
-          setFlightQuotes(responseFlights["Quotes"]);
-        }
-        if (responseFlights["Places"]) {
-          setFlightPlaces(responseFlights["Places"]);
-        }
-        if (responseFlights["Carriers"]) {
-          setFlightCarriers(responseFlights["Carriers"]);
-        }
-        if(responseFlights[ "Currencies"]){
-          setFlightCurrencies(responseFlights["Currencies"])
-        }
-      }
-      else{
-        setShowFlights(false)
-        setError(true)
-      }
+      getResponseFlights();     
+       
     }
-    
+       
     function getResponseFlights(){
+      
       props.model.getAllFlights()
       .then(response => {
-         setResponseFlights(response)
+         //setResponseFlights(response)
+         props.model.setflightQuotes(response["Quotes"])        
+        props.model.setflightPlaces(response["Places"] );
+        props.model.setflightCarriers(response["Carriers"]);  
+        props.model.setflightCurrencies(response["Currencies"]);   
+        setShowFlights(true);        
+        
        })
        .catch(err => {
            console.log(err);
-       });;
+       });
     }
 
   return (
@@ -67,7 +67,7 @@ import { Link } from "react-router-dom";
       <Passengers model={props.model} />
      
       <button className="button" onClick={handleOnClick}> Search </button>
-      {showFlights ? <Flights model={props.model} quotes={flightQuotes} places={flightPlaces} carriers = {flightCarriers} currencies={flightCurrencies}/> : null}
+      {showFlights ? <Flights model={props.model} quotes={props.model.getflightQuotes()} places={props.model.getflightPlaces()} carriers = {props.model.getflightCarriers()} currencies={props.model.getflightCurrencies()}/> : null}
      
     </div>
   );

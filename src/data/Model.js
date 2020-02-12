@@ -5,6 +5,10 @@ import * as constants from "./apiConfig";
 class Model extends ObservableModel {
   constructor() {
     super();
+    this.flightQuotes = [];
+    this.flightPlaces = [];
+    this.flightCarriers = [];
+    this.flightCurrencies = [];
     this.numberOfPassengers = 1;
     this.departurePlace = {};
     this.arrivalPlace = {};
@@ -13,6 +17,23 @@ class Model extends ObservableModel {
     this.flightsData = [];
     this.selectedFlight = [];
     //this.doOnce = true;
+  }
+
+  getflightQuotes() {
+    console.log("accesed")
+    return this.flightQuotes;    
+  }
+
+  getflightPlaces() {
+    return this.flightPlaces;
+  }
+
+  getflightCarriers() {
+    return this.flightCarriers;
+  }
+
+  getflightCurrencies() {
+    return this.flightCurrencies;
   }
 
   getNumberOfPassengers() {
@@ -39,10 +60,30 @@ class Model extends ObservableModel {
     return this.selectedFlight;
   }  
 
+  setflightCarriers(num) {
+    this.flightCarriers = num;
+    console.log("carrierset", num);
+    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+
+  setflightCurrencies(num) {
+    this.flightCurrencies = num;
+    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+  setflightPlaces(num) {
+    this.flightPlaces = num;
+    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+  setflightQuotes(num) {
+    this.flightQuotes = num;
+   // this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+
   setNumberOfPassengers(num) {
     this.numberOfPassengers = num;
     this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
+
 
   setArrivalPlace(place) {
     this.arrivalPlace = place;
