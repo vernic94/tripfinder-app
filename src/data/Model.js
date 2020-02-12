@@ -5,13 +5,35 @@ import * as constants from "./apiConfig";
 class Model extends ObservableModel {
   constructor() {
     super();
+    this.flightQuotes = [];
+    this.flightPlaces = [];
+    this.flightCarriers = [];
+    this.flightCurrencies = [];
     this.numberOfPassengers = 1;
     this.departurePlace = {};
     this.arrivalPlace = {};
     this.departureDate = "";
     this.returnDate = "";
     this.flightsData = [];
-    this.doOnce = true;
+    this.selectedFlight = [];
+    //this.doOnce = true;
+  }
+
+  getflightQuotes() {
+    console.log("accesed")
+    return this.flightQuotes;    
+  }
+
+  getflightPlaces() {
+    return this.flightPlaces;
+  }
+
+  getflightCarriers() {
+    return this.flightCarriers;
+  }
+
+  getflightCurrencies() {
+    return this.flightCurrencies;
   }
 
   getNumberOfPassengers() {
@@ -34,21 +56,45 @@ class Model extends ObservableModel {
     return this.returnDate;
   }
 
+  getSelectedFlight() {
+    return this.selectedFlight;
+  }  
+
+  setflightCarriers(num) {
+    this.flightCarriers = num;
+    console.log("carrierset", num);
+    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+
+  setflightCurrencies(num) {
+    this.flightCurrencies = num;
+    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+  setflightPlaces(num) {
+    this.flightPlaces = num;
+    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+  setflightQuotes(num) {
+    this.flightQuotes = num;
+   // this.notifyObservers({action: "setNumberOfPassengers", value: num})
+  }
+
   setNumberOfPassengers(num) {
     this.numberOfPassengers = num;
     this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
 
+
   setArrivalPlace(place) {
     this.arrivalPlace = place;
-    localStorage.setItem("cityArr", place["PlaceId"]);
+    //localStorage.setItem("cityArr", place["PlaceId"]);
     this.notifyObservers({action: "setArrivalPlace", value: place})
   }
 
   setDeparturePlace(place) {    
     this.departurePlace = place;
-    console.log(place);
-    localStorage.setItem("cityDet", place["PlaceId"]);         
+    //console.log(place);
+   // localStorage.setItem("cityDet", place["PlaceId"]);         
     this.notifyObservers({action: "setDeparturePlace", value: place})
   }
 
@@ -62,7 +108,11 @@ class Model extends ObservableModel {
     this.notifyObservers({action: "setReturnDate", value: date})
   }
 
-  
+  setSelectedFlight(selectedFlight){
+    this.selectedFlight = selectedFlight;
+    this.notifyObservers({action: "setSelectedFlight", value: selectedFlight})
+  }
+
 
   getAirports(city){
     return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/SE/SEK/en-GB/?query=${city}`, {
