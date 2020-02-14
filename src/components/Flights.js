@@ -5,21 +5,23 @@ import { Link } from "react-router-dom";
 
     let [confirmPurchase, setConfirmPurchase] = useState(false);
 
-    function saveFlight(flight){
-       // console.log(flight)
-    }
-
     function getFlight(id) {
         let selectedFlight = flightInfo.filter(flight => id == flight.quoteId);
         if(selectedFlight !== []){
             props.model.setSelectedFlight(selectedFlight);
         }
     }
+    //kör ut set´saved innan produktion
+    function saveFlight(e,b){
+        getFlight(e.target.id);
+        props.model.setSavedFlightArrayObj();
+        alert("This flight has been saved!!!");
+    }   
+    function chooseFlight(e,b){
+        getFlight(e.target.id);       
+    }   
 
-    function chooseFlight(e){
-        getFlight(e.target.id); 
-        setConfirmPurchase(true);
-    }
+    
  
     let flightInfo = props.quotes.map(flight =>
         ({
@@ -51,8 +53,10 @@ import { Link } from "react-router-dom";
                  </div>
                  <div>
                     <p><strong>Price per person:</strong> {flight.price} {flight.currency["Code"]}</p>
-                    <button className="button" onClick={saveFlight(flight)}> Save</button>
-                    <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>        
+                    <button className="button" id={flight.quoteId} onClick={saveFlight}> Save</button> 
+                    <Link to ="/purchase">           
+                    <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>  
+                    </Link>      
                  </div>
                </div>
             )
@@ -62,11 +66,6 @@ import { Link } from "react-router-dom";
     return(
         <div>
            {flights}
-           {confirmPurchase ? 
-            <Link to ="/purchase">
-            <button className="button"> Confirm Purchase</button> 
-            </Link> 
-           : null}
         </div>
       );
  

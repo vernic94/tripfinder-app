@@ -3,6 +3,47 @@ import { Link } from "react-router-dom";
 
 const SavedSearches = (props) => {
 
+    let counter= 0;
+
+    function getFlight(id) {
+        let selectedFlight = props.model.getSavedFlightArrayObj().filter(() => id == id);
+        if(selectedFlight !== []){
+            console.log(selectedFlight);
+            props.model.setSelectedFlight(selectedFlight[0]);
+        }
+    }
+
+    function buySaved(e) {
+        console.log(e.target.id);
+        getFlight(e.target.id);
+        
+    }
+
+    let savedFlights = props.model.getSavedFlightArrayObj().map(flights =>
+        (
+        flights.map( flight =>
+            (
+            <div>
+                <div>
+                 <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
+                 <p>{flight.departureDate}</p>
+                 <p>{flight.outboundCarrier["Name"]}</p>
+              </div>
+              <div>
+                 <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
+                 <p>{flight.returnDate}</p>
+                 <p>{flight.inboundCarrier["Name"]}</p>
+               </div>
+               <div>
+                  <p><strong>Total Price:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
+                  <Link to ="/purchase">
+                  <button className="button" id={counter++} onClick={buySaved}> Buy</button> 
+                  </Link>
+           </div>
+           </div>
+            )
+      )));
+
     return(
         <div>
             <Link to="/search">
@@ -10,6 +51,8 @@ const SavedSearches = (props) => {
             </Link>
             <h1>Ready to book your flight?</h1>
             <p><i>You're just one click away . . .</i></p>
+            {savedFlights}
+            
          </div>
     );
 }

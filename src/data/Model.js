@@ -16,7 +16,19 @@ class Model extends ObservableModel {
     this.returnDate = "";
     this.flightsData = [];
     this.selectedFlight = [];
+    this.SavedFlightArrayObj= [];
     //this.doOnce = true;
+  }
+
+  getSavedFlightArrayObj() {
+    
+    return this.SavedFlightArrayObj;
+  }
+
+  setSavedFlightArrayObj() {
+      this.SavedFlightArrayObj.push(this.selectedFlight);
+      console.log(this.SavedFlightArrayObj);
+      
   }
 
   getflightQuotes() {
@@ -63,20 +75,16 @@ class Model extends ObservableModel {
   setflightCarriers(num) {
     this.flightCarriers = num;
     console.log("carrierset", num);
-    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
 
   setflightCurrencies(num) {
     this.flightCurrencies = num;
-    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
   setflightPlaces(num) {
     this.flightPlaces = num;
-    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
   setflightQuotes(num) {
     this.flightQuotes = num;
-   // this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
 
   setNumberOfPassengers(num) {
@@ -112,6 +120,8 @@ class Model extends ObservableModel {
     this.selectedFlight = selectedFlight;
     this.notifyObservers({action: "setSelectedFlight", value: selectedFlight})
   }
+
+  
 
 
   getAirports(city){
