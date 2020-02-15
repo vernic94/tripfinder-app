@@ -63,11 +63,28 @@ import { Link } from "react-router-dom";
         });
         console.log("flights:",flights)
 
-    return(
-        <div>
-           {flights}
-        </div>
-      );
+    if(flightInfo.length > 0) {
+        return(
+            <div>
+                {flights}
+            </div>
+        );
+    }
+    else{
+        return (
+            <div>
+                <div>
+                    <h3><em>No flights available</em></h3>
+                    <p> <strong>From: </strong>{props.model.flightPlaces[1]["Name"]} - {props.model.flightPlaces[1]["IataCode"]}</p>
+                    <p>{props.model.departureDate}</p>
+                </div>
+                <div>
+                    <p><strong>To: </strong> {props.model.flightPlaces[0]["Name"]} - {props.model.flightPlaces[0]["IataCode"]}</p>
+                   <p>{props.model.returnDate}</p>
+                </div>
+            </div>
+        )
+    }
  
     
 }

@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
   // let flag = true;
 
     function handleOnClick() {
+      setShowFlights(false);
       getResponseFlights();     
     }
        
