@@ -7,14 +7,15 @@ const SavedSearches = (props) => {
 
     function getFlight(id) {
         let selectedFlight = props.model.getSavedFlightArrayObj().filter(() => id == id);
+        console.log("id", id)
         if(selectedFlight !== []){
-            console.log(selectedFlight);
+            console.log("selectedFlight in saved:",selectedFlight);
             props.model.setSelectedFlight(selectedFlight[0]);
         }
     }
 
     function buySaved(e) {
-        console.log(e.target.id);
+        console.log("e.target.id",e.target.id);
         getFlight(e.target.id);
         
     }
@@ -35,7 +36,7 @@ const SavedSearches = (props) => {
                  <p>{flight.inboundCarrier["Name"]}</p>
                </div>
                <div>
-                  <p><strong>Total Price:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
+                  <p><strong>Price for {props.model.getNumberOfPassengers()} persons:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
                   <Link to ="/purchase">
                   <button className="button" id={counter++} onClick={buySaved}> Buy</button> 
                   </Link>

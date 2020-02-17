@@ -27,12 +27,11 @@ class Model extends ObservableModel {
 
   setSavedFlightArrayObj() {
       this.SavedFlightArrayObj.push(this.selectedFlight);
-      console.log(this.SavedFlightArrayObj);
+      console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
       
   }
 
   getflightQuotes() {
-    console.log("accesed")
     return this.flightQuotes;    
   }
 
@@ -74,7 +73,6 @@ class Model extends ObservableModel {
 
   setflightCarriers(num) {
     this.flightCarriers = num;
-    console.log("carrierset", num);
   }
 
   setflightCurrencies(num) {
@@ -120,9 +118,6 @@ class Model extends ObservableModel {
     this.selectedFlight = selectedFlight;
     this.notifyObservers({action: "setSelectedFlight", value: selectedFlight})
   }
-
-  
-
 
   getAirports(city){
     return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/SE/SEK/en-GB/?query=${city}`, {

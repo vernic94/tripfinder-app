@@ -11,13 +11,13 @@ import { Link } from "react-router-dom";
             props.model.setSelectedFlight(selectedFlight);
         }
     }
-    //kör ut set´saved innan produktion
-    function saveFlight(e,b){
+
+    function saveFlight(e){
         getFlight(e.target.id);
         props.model.setSavedFlightArrayObj();
-        alert("This flight has been saved!!!");
+        alert("This flight has been saved!");
     }   
-    function chooseFlight(e,b){
+    function chooseFlight(e){
         getFlight(e.target.id);       
     }   
 
