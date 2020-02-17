@@ -1,6 +1,7 @@
 
 import ObservableModel from "./ObservableModel";
 import * as constants from "./apiConfig";
+import * as firebase from 'firebase';
 
 class Model extends ObservableModel {
   constructor() {
@@ -28,7 +29,10 @@ class Model extends ObservableModel {
   setSavedFlightArrayObj() {
       this.SavedFlightArrayObj.push(this.selectedFlight);
       console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
-      
+      firebase.database().ref('fligt/'+ "savedfligt").set({
+        saved : this.SavedFlightArrayObj
+    });
+    
   }
 
   getflightQuotes() {
