@@ -22,7 +22,7 @@ const SavedSearches = (props) => {
 
     let savedFlights = props.model.getSavedFlightArrayObj().map(flights =>
         (
-        flights.map( flight =>
+        flights.map( flight => 
             (
             <div>
                 <div>

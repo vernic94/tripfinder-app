@@ -18,21 +18,70 @@ class Model extends ObservableModel {
     this.flightsData = [];
     this.selectedFlight = [];
     this.SavedFlightArrayObj= [];
+    this.SavedFlightArrayObjtest = [];
+    this.data = [];
+    
     //this.doOnce = true;
   }
 
+//   snapshotToArray(snapshot) {
+//     var returnArr = [];
+
+//     snapshot.forEach(function(childSnapshot, index) {
+//         var item = childSnapshot.val();
+//         item.key = index;
+
+//         returnArr.push(item);
+//     });
+
+//     return returnArr;
+// };
+  
+// getSavedFlightresponse(response){
+//   this.data.push(response);
+// }
+
   getSavedFlightArrayObj() {
+    var database = firebase.database().ref('fligt/'+ "savedfligt/saved/0/0");
+    database.on('value', function(snapshot)   {
     
-    return this.SavedFlightArrayObj;
+      // if (snapshot.exists){
+      //   snapshot.then(fligt => this.getSavedFlightresponse(fligt));
+      // }
+    
+      
+      // this.SavedFlightArrayObjtest = snapshot.val();
+      // console.log(this.SavedFlightArrayObjtest);
+         
+  });
+    
+     return this.SavedFlightArrayObj;
   }
 
   setSavedFlightArrayObj() {
       this.SavedFlightArrayObj.push(this.selectedFlight);
       console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
-      firebase.database().ref('fligt/'+ "savedfligt").set({
-        saved : this.SavedFlightArrayObj
+      this.SavedFlightArrayObj.map((flights, index) => {
+      flights.map((flight) => {
+        debugger
+      firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
+          currency : flight.currency,
+          departureDate : flight.departureDate,
+          destination : flight.destination,
+          inboundCarrier : flight.inboundCarrier,
+          price : flight.price,
+          quoteId : flight.quoteId,
+          returnDate : flight.returnDate,
+          source : flight.source
+      }) 
+      
+    })
     });
     
+    this.selectedFlight.map(fligt => {
+      console.log(fligt.currency)
+    })
+
   }
 
   getflightQuotes() {

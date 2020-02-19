@@ -4,7 +4,7 @@ import * as firebase from 'firebase';
 
  const Flights = (props) => {
     
-        var database = firebase.database().ref('fligt/'+ "savedfligt/saved");
+        // var database = firebase.database().ref('fligt/'+ "savedfligt/saved");
     
         let [confirmPurchase, setConfirmPurchase] = useState(false);
     
@@ -12,10 +12,10 @@ import * as firebase from 'firebase';
             let selectedFlight = flightInfo.filter(flight => id == flight.quoteId);
             if(selectedFlight !== []){
                 props.model.setSelectedFlight(selectedFlight);   
-                database.on('value', function(snapshot)   {
+                // database.on('value', function(snapshot)   {
     
-                    console.log("Read from the serever: ",snapshot.val());
-                });
+                //     console.log("Read from the serever: ",snapshot.val());
+                // });
             }
         }
 
