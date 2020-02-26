@@ -7,17 +7,8 @@ import Flights from "./Flights";
 import { Link } from "react-router-dom";
 
   const SearchFlights = (props) => {
-  
-  // let [responseFlights, setResponseFlights] = useState({});
-  // let [flightQuotes, setFlightQuotes] = useState([]);
-  // let [flightPlaces, setFlightPlaces] = useState([]);
-  // let [flightCarriers, setFlightCarriers] = useState([]);
-  // let [flightCurrencies, setFlightCurrencies] = useState([]);
-  // let [flightCurrencies, setFlightCurrencies] = useState();
+ 
   let [showFlights, setShowFlights ] = useState(false);
-  // let [error, setError] = useState(false);
-  // let [loading, setLoading] = useState(false);
-  // let flag = true;
 
     function handleOnClick() {
       setShowFlights(false);
@@ -28,7 +19,6 @@ import { Link } from "react-router-dom";
       
       props.model.getAllFlights()
       .then(response => {
-         //setResponseFlights(response)
         props.model.setflightQuotes(response["Quotes"])        
         props.model.setflightPlaces(response["Places"] );
         props.model.setflightCarriers(response["Carriers"]);  

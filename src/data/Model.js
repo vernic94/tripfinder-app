@@ -63,7 +63,6 @@ class Model extends ObservableModel {
       console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
       this.SavedFlightArrayObj.map((flights, index) => {
       flights.map((flight) => {
-        debugger
       firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
           currency : flight.currency,
           departureDate : flight.departureDate,
@@ -74,7 +73,6 @@ class Model extends ObservableModel {
           returnDate : flight.returnDate,
           source : flight.source
       }) 
-      
     })
     });
     
@@ -82,6 +80,15 @@ class Model extends ObservableModel {
       console.log(fligt.currency)
     })
 
+  }
+
+  // deleteSavedFlight(newSavedFlightArray) {
+  //   this.SavedFlightArrayObj = newSavedFlightArray;
+  //   console.log(this.SavedFlightArrayObj);
+  // }
+  deleteSavedFlight(){
+   this.SavedFlightArrayObj = this.SavedFlightArrayObj.filter(this.selectedFlight) 
+   this.notifyObservers({action: "deletedFlight", value: this.SavedFlightArrayObj})
   }
 
   getflightQuotes() {

@@ -19,18 +19,15 @@ import * as firebase from 'firebase';
             }
         }
 
-    //kör ut set´saved innan produktion
     function saveFlight(e,b){
         getFlight(e.target.id);
         props.model.setSavedFlightArrayObj();
-        alert("This flight has been saved!!!");
+        alert("This flight has been saved!");
     }   
     function chooseFlight(e,b){
         getFlight(e.target.id);       
     }   
 
-    
- 
     let flightInfo = props.quotes.map(flight =>
         ({
             source: props.places.find(a => a["PlaceId"] === flight["OutboundLeg"]["OriginId"]),

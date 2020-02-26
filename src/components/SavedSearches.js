@@ -4,25 +4,49 @@ import { Link } from "react-router-dom";
 const SavedSearches = (props) => {
 
     let counter= 0;
+    let deleteCounter = 0;
+    let SavedFlightArray = [];
 
     function getFlight(id) {
-        let selectedFlight = props.model.getSavedFlightArrayObj().filter(() => id == id);
-        console.log("id", id)
+        // let selectedFlight = props.model.getSavedFlightArrayObj().filter(() => id == id);
+        let selectedFlight = props.model.getSavedFlightArrayObj()
         if(selectedFlight !== []){
-            console.log("selectedFlight in saved:",selectedFlight);
-            props.model.setSelectedFlight(selectedFlight[0]);
+            props.model.setSelectedFlight(selectedFlight[id]);
         }
     }
 
     function buySaved(e) {
         console.log("e.target.id",e.target.id);
         getFlight(e.target.id);
-        
+    }
+
+    function onDelete(e) {
+        getFlight(e.target.id);
+        // let id = parseInt(e.target.id);
+        // if(id === 0) {
+        //     SavedFlightArray = props.model.getSavedFlightArrayObj();
+        // }
+        // let newSavedFlightArray = props.model.getSavedFlightArrayObj().filter(flight => SavedFlightArray.indexOf(flight) !== id)
+        // props.model.deleteSavedFlight(newSavedFlightArray);
+    }
+
+    useEffect(() => {
+        props.model.addObserver(update);
+
+        return function cleanup() {
+            props.model.removeObserver(props);
+        };
+    });
+
+    function update(changes) {
+        if (changes.action === "deletedFlight"){
+            props.model.setSavedFlightArrayObj(changes.value)            
+        }
     }
 
     let savedFlights = props.model.getSavedFlightArrayObj().map(flights =>
         (
-        flights.map( flight => 
+        flights.map( flight =>
             (
             <div>
                 <div>
@@ -40,6 +64,7 @@ const SavedSearches = (props) => {
                   <Link to ="/purchase">
                   <button className="button" id={counter++} onClick={buySaved}> Buy</button> 
                   </Link>
+                  <button className="button" id={deleteCounter++} onClick={onDelete}>Delete</button>
            </div>
            </div>
             )
