@@ -20,8 +20,6 @@ class Model extends ObservableModel {
     this.SavedFlightArrayObj= [];
     this.SavedFlightArrayObjtest = [];
     this.data = [];
-    
-    //this.doOnce = true;
   }
 
 //   snapshotToArray(snapshot) {
@@ -59,10 +57,9 @@ class Model extends ObservableModel {
   }
 
   setSavedFlightArrayObj() {
-      this.SavedFlightArrayObj.push(this.selectedFlight);
+      this.SavedFlightArrayObj.push(this.selectedFlight[0]);
       console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
-      this.SavedFlightArrayObj.map((flights, index) => {
-      flights.map((flight) => {
+      this.SavedFlightArrayObj.map((flight, index)  => {
       firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
           currency : flight.currency,
           departureDate : flight.departureDate,
@@ -73,7 +70,7 @@ class Model extends ObservableModel {
           returnDate : flight.returnDate,
           source : flight.source
       }) 
-    })
+    
     });
     
     this.selectedFlight.map(fligt => {
@@ -86,9 +83,12 @@ class Model extends ObservableModel {
   //   this.SavedFlightArrayObj = newSavedFlightArray;
   //   console.log(this.SavedFlightArrayObj);
   // }
-  deleteSavedFlight(){
-   this.SavedFlightArrayObj = this.SavedFlightArrayObj.filter(this.selectedFlight) 
-   this.notifyObservers({action: "deletedFlight", value: this.SavedFlightArrayObj})
+  deleteSavedFlight(id){
+   //this.SavedFlightArrayObj = this.SavedFlightArrayObj.filter(() => this.selectedFlight);
+   this.SavedFlightArrayObj = this.SavedFlightArrayObj.splice(id);
+   console.log(this.SavedFlightArrayObj,id);
+
+   this.notifyObservers({action: "deletedFlight", value: this.getSavedFlightArrayObj()})
   }
 
   getflightQuotes() {

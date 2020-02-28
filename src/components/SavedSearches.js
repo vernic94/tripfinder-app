@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const SavedSearches = (props) => {
 
     let counter= 0;
-    let deleteCounter = 0;
-    let SavedFlightArray = [];
+    let deleteCounter = 1;
+    let [savedFlightsArray, setSavedFlightsArray]= useState([]);
 
     function getFlight(id) {
         // let selectedFlight = props.model.getSavedFlightArrayObj().filter(() => id == id);
@@ -21,7 +21,9 @@ const SavedSearches = (props) => {
     }
 
     function onDelete(e) {
-        getFlight(e.target.id);
+        //getFlight(e.target.id);
+        props.model.deleteSavedFlight(e.target.id);
+        console.log("e.target.id",e.target.id);
         // let id = parseInt(e.target.id);
         // if(id === 0) {
         //     SavedFlightArray = props.model.getSavedFlightArrayObj();
@@ -39,14 +41,13 @@ const SavedSearches = (props) => {
     });
 
     function update(changes) {
+        //reset state containing flights
         if (changes.action === "deletedFlight"){
-            props.model.setSavedFlightArrayObj(changes.value)            
+            setSavedFlightsArray(changes.value);            
         }
     }
 
-    let savedFlights = props.model.getSavedFlightArrayObj().map(flights =>
-        (
-        flights.map( flight =>
+    let savedFlights = props.model.getSavedFlightArrayObj().map( flight =>
             (
             <div>
                 <div>
@@ -68,7 +69,7 @@ const SavedSearches = (props) => {
            </div>
            </div>
             )
-      )));
+      );
 
     return(
         <div>
