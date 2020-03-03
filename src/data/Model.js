@@ -84,12 +84,13 @@ class Model extends ObservableModel {
   //   console.log(this.SavedFlightArrayObj);
   // }
   deleteSavedFlight(id){
-   //this.SavedFlightArrayObj = this.SavedFlightArrayObj.filter(() => this.selectedFlight);
-   this.SavedFlightArrayObj = this.SavedFlightArrayObj.splice(id);
-   console.log(this.SavedFlightArrayObj,id);
-
-   this.notifyObservers({action: "deletedFlight", value: this.getSavedFlightArrayObj()})
-  }
+    //this.SavedFlightArrayObj = this.SavedFlightArrayObj.filter(() => this.selectedFlight);
+ 
+    this.SavedFlightArrayObj.splice(id - 1, 1);
+    console.log(this.SavedFlightArrayObj,id);
+ 
+   //  this.notifyObservers({action: "deletedFlight", value: this.getSavedFlightArrayObj()})
+   }
 
   getflightQuotes() {
     return this.flightQuotes;    

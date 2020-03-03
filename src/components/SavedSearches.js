@@ -21,6 +21,7 @@ const SavedSearches = (props) => {
     }
 
     function onDelete(e) {
+        setSavedFlightsArray([]);
         //getFlight(e.target.id);
         props.model.deleteSavedFlight(e.target.id);
         console.log("e.target.id",e.target.id);
