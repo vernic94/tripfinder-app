@@ -48,7 +48,8 @@ const SavedSearches = (props) => {
         }
     }
 
-    let savedFlights = props.model.getSavedFlightArrayObj().map( flight =>
+    let savedFlights = props.model.getSavedFlightArrayObj().map( flights =>
+        (flights.map(flight=>
             (
             <div>
                 <div>
@@ -69,7 +70,7 @@ const SavedSearches = (props) => {
                   <button className="button" id={deleteCounter++} onClick={onDelete}>Delete</button>
            </div>
            </div>
-            )
+            )))
       );
 
     return(
