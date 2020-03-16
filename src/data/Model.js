@@ -59,10 +59,11 @@ class Model extends ObservableModel {
   setSavedFlightArrayObj() {
       //this.SavedFlightArrayObj.push(this.selectedFlight[0]);
       this.SavedFlightArrayObj.push(this.selectedFlight);
+      console.log(this.flightsData);
       
       console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
-      this.SavedFlightArrayObj.map((flight, index)  => {
-        this.flightsData.map((flight) => {
+      this.SavedFlightArrayObj.map((flights, index)  => {
+        flights.map((flight) => {
 
       firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
           currency : flight.currency,

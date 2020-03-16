@@ -17,6 +17,8 @@ var config = {
     measurementId: "G-69HJ73Q14B"
 }
 
+
+
 firebase.initializeApp(config)
 
 ReactDOM.render( 
