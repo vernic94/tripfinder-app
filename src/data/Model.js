@@ -1,6 +1,7 @@
 
 import ObservableModel from "./ObservableModel";
 import * as constants from "./apiConfig";
+import * as firebase from 'firebase';
 
 class Model extends ObservableModel {
   constructor() {
@@ -16,11 +17,86 @@ class Model extends ObservableModel {
     this.returnDate = "";
     this.flightsData = [];
     this.selectedFlight = [];
-    //this.doOnce = true;
+    this.SavedFlightArrayObj= [];
+    this.SavedFlightArrayObjtest = [];
+    this.data = [];
   }
 
+//   snapshotToArray(snapshot) {
+//     var returnArr = [];
+
+//     snapshot.forEach(function(childSnapshot, index) {
+//         var item = childSnapshot.val();
+//         item.key = index;
+
+//         returnArr.push(item);
+//     });
+
+//     return returnArr;
+// };
+  
+// getSavedFlightresponse(response){
+//   this.data.push(response);
+// }
+
+  getSavedFlightArrayObj() {
+    var database = firebase.database().ref('fligt/'+ "savedfligt/saved/0/0");
+    database.on('value', function(snapshot)   {
+    
+      // if (snapshot.exists){
+      //   snapshot.then(fligt => this.getSavedFlightresponse(fligt));
+      // }
+    
+      
+      // this.SavedFlightArrayObjtest = snapshot.val();
+      // console.log(this.SavedFlightArrayObjtest);
+         
+  });
+    
+     return this.SavedFlightArrayObj;
+  }
+
+  setSavedFlightArrayObj() {
+      //this.SavedFlightArrayObj.push(this.selectedFlight[0]);
+      this.SavedFlightArrayObj.push(this.selectedFlight);
+      
+      console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
+      this.SavedFlightArrayObj.map((flight, index)  => {
+        this.flightsData.map((flight) => {
+
+      firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
+          currency : flight.currency,
+          departureDate : flight.departureDate,
+          destination : flight.destination,
+          inboundCarrier : flight.inboundCarrier,
+          price : flight.price,
+          quoteId : flight.quoteId,
+          returnDate : flight.returnDate,
+          source : flight.source
+      }) 
+    })
+    
+    });
+    
+    this.selectedFlight.map(flight => {
+      console.log(flight.currency)
+    })
+  }
+
+  // deleteSavedFlight(newSavedFlightArray) {
+  //   this.SavedFlightArrayObj = newSavedFlightArray;
+  //   console.log(this.SavedFlightArrayObj);
+  // }
+  deleteSavedFlight(id){
+    //this.SavedFlightArrayObj = this.SavedFlightArrayObj.filter(() => this.selectedFlight);
+ 
+    this.SavedFlightArrayObj.splice(id - 1, 1);
+    console.log(this.SavedFlightArrayObj,id);
+ 
+   //  this.notifyObservers({action: "deletedFlight", value: this.getSavedFlightArrayObj()})
+   }
+
   getflightQuotes() {
-    console.log("accesed")
     return this.flightQuotes;    
   }
 
@@ -62,21 +138,16 @@ class Model extends ObservableModel {
 
   setflightCarriers(num) {
     this.flightCarriers = num;
-    console.log("carrierset", num);
-    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
 
   setflightCurrencies(num) {
     this.flightCurrencies = num;
-    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
   setflightPlaces(num) {
     this.flightPlaces = num;
-    //this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
   setflightQuotes(num) {
     this.flightQuotes = num;
-   // this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
 
   setNumberOfPassengers(num) {
@@ -112,7 +183,6 @@ class Model extends ObservableModel {
     this.selectedFlight = selectedFlight;
     this.notifyObservers({action: "setSelectedFlight", value: selectedFlight})
   }
-
 
   getAirports(city){
     return fetch(`https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/SE/SEK/en-GB/?query=${city}`, {

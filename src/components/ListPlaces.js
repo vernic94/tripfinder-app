@@ -20,18 +20,6 @@ const ListPlaces = (props) => {
         };
     });
 
-    //Localstorage behövs för att få ut rätt namn vid tidigare senaste inmatning
-    // function citynameReload(locCity){
-    //     let loc = localStorage.getItem(locCity);        
-    //     console.log(loc);
-    //     if (loc){            
-    //         return loc;
-    //     }
-    //     else{
-    //         return "";
-    //     }
-    // }
-
     function update(changes) {
         if (changes.action === "setDeparturePlace"){
             setAirportDepartureVisible(false);

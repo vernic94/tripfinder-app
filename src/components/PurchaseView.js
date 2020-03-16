@@ -17,7 +17,7 @@ const PurchaseView = (props) => {
                    <p>{flight.inboundCarrier["Name"]}</p>
                  </div>
                  <div>
-                    <p><strong>Total Price:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
+                    <p><strong>Price for {props.model.getNumberOfPassengers()} persons:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
              </div>
              </div>
         ));

@@ -12,6 +12,7 @@ import PurchaseView from "./components/PurchaseView";
 import flightInstance from './components/Flights';
 
 class App extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
