@@ -39,21 +39,52 @@ class Model extends ObservableModel {
 //   this.data.push(response);
 // }
 
+pushToSAO (data) {
+  console.log(data);
+  this.SavedFlightArrayObj.push(data);
+}
+
   getSavedFlightArrayObj() {
-    var database = firebase.database().ref('fligt/'+ "savedfligt/saved/0/0");
-    database.on('value', function(snapshot)   {
-    
+    var database = firebase.database().ref('fligt/'+ "savedfligt");
+    var current = [];
+   // database.on('value', function(snapshot)   {
       // if (snapshot.exists){
       //   snapshot.then(fligt => this.getSavedFlightresponse(fligt));
       // }
+
+     
+database.once("value")
+  .then(function(snapshot) { 
+  current = snapshot.val();
+  console.log(current);
+},(this.SavedFlightArrayObj = current,console.log(this.SavedFlightArrayObj)));
+
+
+      // database.once('value', function(snapshot) {
+      //   snapshot.forEach(function(childSnapshot) {
+      //     var childKey = childSnapshot.key;
+      //     var childData = childSnapshot.val();
+      //     console.log(childData);
+      //     // if (!this.SavedFlightArrayObj) {
+      //     // this.SavedFlightArrayObj = childData
+      //     // }
+      //     //console.log("SparadeFlygfråndatabasen",this.SavedFlightArrayObj)
+      //   });
+      //   console.log(snapshot.exportVal())
+      //   //this.SavedFlightArrayObj.push(1);
+      // });
     
       
       // this.SavedFlightArrayObjtest = snapshot.val();
       // console.log(this.SavedFlightArrayObjtest);
          
-  });
+  //});
     
      return this.SavedFlightArrayObj;
+  }
+
+  pushToSAO (data) {
+    this.SavedFlightArrayObj.push(data);
   }
 
   setSavedFlightArrayObj() {
@@ -62,7 +93,7 @@ class Model extends ObservableModel {
       console.log(this.flightsData);
       
       console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
-      this.SavedFlightArrayObj.map((flights, index)  => {
+      this.SavedFlightArrayObj.map((flights, index) => {
         flights.map((flight) => {
 
       firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
