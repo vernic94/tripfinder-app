@@ -17,70 +17,41 @@ class Model extends ObservableModel {
     this.returnDate = "";
     this.flightsData = [];
     this.selectedFlight = [];
-    this.SavedFlightArrayObj= [];
     this.data = [];
+   // this.database = firebase.database().ref('fligt/'+ "savedfligt");
     // this.state = {
     //   currentDBFlights: [],
     // }
   }
 
-// pushToSAO (data) {
-//   this.SavedFlightArrayObj.push(data);
-// }
 
-// readFromDatabase(){
-
-//   var database = firebase.database().ref('fligt/'+ "savedfligt");
-//   //var current = [];
-//   return database.once("value").then((snapshot) => {
-//       var current = snapshot.val();
-//       this.setState({currentDBFlights : currrent})
-//       }
-//   );
-// }
   fetchSavedFlightArray() {
-    var database = firebase.database().ref('fligt/'+ "savedfligt");     
-     database.once("value")
+    console.log("here in fetchSave")
+    var databaseRef =  firebase.database().ref('flights');
+    databaseRef.once("value")
       .then((snapshot) => { 
-        this.notifyObservers({action: "fetchSavedFlightObj", value: snapshot.val()})
+        let flightList = snapshot.val();
+        console.log(Object.keys(flightList))
+        flightList = Object.keys(flightList).map(key => flightList[key][0])
+        this.notifyObservers({action: "fetchSavedFlightObj", value: flightList})
     })        
   }
 
-  pushToSAO (data) {
-    this.SavedFlightArrayObj.push(data);
-    console.log("data: ", data);
-  }
-
-  setSavedFlightArrayObj() {
-      this.SavedFlightArrayObj.push(this.selectedFlight);
-      console.log("this.flightData: ",this.flightsData);
-      
-      console.log("setSavedFlightArrayObjbefore:",this.SavedFlightArrayObj);
-      this.SavedFlightArrayObj.map((flights, index) => {
-        flights.map((flight) => {
-            firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
-                currency : flight.currency,
-                departureDate : flight.departureDate,
-                destination : flight.destination,
-                inboundCarrier : flight.inboundCarrier,
-                outboundCarrier : flight.outboundCarrier,
-                price : flight.price,
-                quoteId : flight.quoteId,
-                returnDate : flight.returnDate,
-                source : flight.source
-          }) 
-        })
-      });
-    
-      console.log("setSavedFlightArrayObjAfter:",this.SavedFlightArrayObj);
-    
-    // this.selectedFlight.map(flight => {
-    //   })
+  saveFlightToDB(flight) {
+    var databaseRef =  firebase.database().ref('flights/');
+    const newKey = databaseRef.push().key;
+    databaseRef.child(newKey).set(flight);
   }
 
   deleteSavedFlight(id){
+    var database = firebase.database().ref('flights/');     
+    database.child(id - 1).remove().then( obj => {
+      console.log(obj)
+      this.notifyObservers({action: "deletedFlight", value: this.SavedFlightArrayObj})
+
+    })
     this.SavedFlightArrayObj.splice(id - 1, 1);
-     }
+  }
 
   getflightQuotes() {
     return this.flightQuotes;    

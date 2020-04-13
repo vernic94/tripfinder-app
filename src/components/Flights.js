@@ -13,16 +13,18 @@ import * as firebase from 'firebase';
             }
         }
 
-    function saveFlight(e,b){
-        getFlight(e.target.id);
-        props.model.setSavedFlightArrayObj();
+    function saveFlight(e){
+        console.log(e.target.id)
+        let selectedFlight = flightInfo.filter(flight => e.target.id == flight.id);
+        props.model.saveFlightToDB(selectedFlight)
         alert("This flight has been saved!");
     }   
+    
     function chooseFlight(e,b){
         getFlight(e.target.id);       
     }   
 
-    let flightInfo = props.quotes.map(flight =>
+    let flightInfo = props.quotes.map((flight, index) =>
         ({
             source: props.places.find(a => a["PlaceId"] === flight["OutboundLeg"]["OriginId"]),
             destination: props.places.find(a => a["PlaceId"] === flight["OutboundLeg"]["DestinationId"]),
@@ -32,7 +34,7 @@ import * as firebase from 'firebase';
             outboundCarrier: props.carriers.find(carrier => carrier["CarrierId"] === flight["OutboundLeg"]["CarrierIds"][0]),
             inboundCarrier: props.carriers.find(carrier => carrier["CarrierId"] === flight["InboundLeg"]["CarrierIds"][0]),
             currency: props.currencies[0],
-            quoteId: flight["QuoteId"] -1,
+            id: index
     }));    
 
     let flights = flightInfo.map(function (flight, index) {
@@ -50,9 +52,9 @@ import * as firebase from 'firebase';
                  </div>
                  <div>
                     <p><strong>Price per person:</strong> {flight.price} {flight.currency["Code"]}</p>
-                    <button className="button" id={flight.quoteId} onClick={saveFlight}> Save</button> 
+                    <button className="button" id={flight.id} onClick={saveFlight}> Save</button> 
                     <Link to ="/purchase">           
-                    <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>  
+                    <button className="button" id={flight.id} onClick={chooseFlight}> Buy</button>  
                     </Link>      
                  </div>
                </div>

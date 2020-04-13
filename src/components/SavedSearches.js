@@ -20,7 +20,6 @@ const SavedSearches = (props) => {
     }
 
     function onDelete(e) {
-        setSavedFlightsArray([]);
         props.model.deleteSavedFlight(e.target.id);
         console.log("e.target.id",e.target.id);
     }
@@ -28,17 +27,16 @@ const SavedSearches = (props) => {
     useEffect(() => {
         props.model.fetchSavedFlightArray();
         props.model.addObserver(update);
-
+        console.log("here")
         return function cleanup() {
             props.model.removeObserver(props);
         };
-    });
+    }, []);
 
     function update(changes) {
         //reset state containing flights
         if (changes.action === "deletedFlight" || changes.action == "fetchSavedFlightObj"){
-            console.log("here updating")
-            console.log(changes.value)
+            console.log("hola " + changes.value)
             setSavedFlightsArray(changes.value);            
         }
     }
@@ -50,7 +48,7 @@ const SavedSearches = (props) => {
                 <div>
                  <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
                  <p>{flight.departureDate}</p>
-                 {/* <p>{flight.outboundCarrier["Name"]}</p>  --> */}
+                <p>{flight.outboundCarrier["Name"]}</p>
               </div>
               <div>
                  <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
