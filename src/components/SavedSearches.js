@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
+import * as firebase from 'firebase';
 
 const SavedSearches = (props) => {
 
     let counter= 0;
     let deleteCounter = 1;
-    let [savedFlightsArray, setSavedFlightsArray]= useState([]);
+    let [savedFlisgthsArray, setSavedFlightsArray]= useState([]);
 
     function getFlight(id) {
-        // let selectedFlight = props.model.getSavedFlightArrayObj().filter(() => id == id);
-        let selectedFlight = props.model.getSavedFlightArrayObj()
-        if(selectedFlight !== []){
-            props.model.setSelectedFlight(selectedFlight[id]);
+        if(savedFlisgthsArray !== []){
+            props.model.setSelectedFlight(savedFlisgthsArray[id]);
         }
     }
 
@@ -22,18 +21,12 @@ const SavedSearches = (props) => {
 
     function onDelete(e) {
         setSavedFlightsArray([]);
-        //getFlight(e.target.id);
         props.model.deleteSavedFlight(e.target.id);
         console.log("e.target.id",e.target.id);
-        // let id = parseInt(e.target.id);
-        // if(id === 0) {
-        //     SavedFlightArray = props.model.getSavedFlightArrayObj();
-        // }
-        // let newSavedFlightArray = props.model.getSavedFlightArrayObj().filter(flight => SavedFlightArray.indexOf(flight) !== id)
-        // props.model.deleteSavedFlight(newSavedFlightArray);
     }
 
     useEffect(() => {
+        props.model.fetchSavedFlightArray();
         props.model.addObserver(update);
 
         return function cleanup() {
@@ -43,19 +36,21 @@ const SavedSearches = (props) => {
 
     function update(changes) {
         //reset state containing flights
-        if (changes.action === "deletedFlight"){
+        if (changes.action === "deletedFlight" || changes.action == "fetchSavedFlightObj"){
+            console.log("here updating")
+            console.log(changes.value)
             setSavedFlightsArray(changes.value);            
         }
     }
 
-    let savedFlights = props.model.getSavedFlightArrayObj().map( flights =>
-        (flights.map(flight=>
+    
+    let savedFlights = savedFlisgthsArray.map( flight =>
             (
             <div>
                 <div>
                  <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
                  <p>{flight.departureDate}</p>
-                 <p>{flight.outboundCarrier["Name"]}</p>
+                 {/* <p>{flight.outboundCarrier["Name"]}</p>  --> */}
               </div>
               <div>
                  <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
@@ -70,7 +65,7 @@ const SavedSearches = (props) => {
                   <button className="button" id={deleteCounter++} onClick={onDelete}>Delete</button>
            </div>
            </div>
-            )))
+            )
       );
 
     return(

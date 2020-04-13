@@ -4,18 +4,12 @@ import * as firebase from 'firebase';
 
  const Flights = (props) => {
     
-        // var database = firebase.database().ref('fligt/'+ "savedfligt/saved");
-    
         let [confirmPurchase, setConfirmPurchase] = useState(false);
     
         function getFlight(id) {
             let selectedFlight = flightInfo.filter(flight => id == flight.quoteId);
             if(selectedFlight !== []){
                 props.model.setSelectedFlight(selectedFlight);   
-                // database.on('value', function(snapshot)   {
-    
-                //     console.log("Read from the serever: ",snapshot.val());
-                // });
             }
         }
 
@@ -40,8 +34,6 @@ import * as firebase from 'firebase';
             currency: props.currencies[0],
             quoteId: flight["QuoteId"] -1,
     }));    
-        
-        console.log("flightinfo:", flightInfo)
 
     let flights = flightInfo.map(function (flight, index) {
             return  (       
@@ -66,7 +58,6 @@ import * as firebase from 'firebase';
                </div>
             )
         });
-        console.log("flights:",flights)
 
     if(flightInfo.length > 0) {
         return(

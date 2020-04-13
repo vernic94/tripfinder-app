@@ -18,115 +18,69 @@ class Model extends ObservableModel {
     this.flightsData = [];
     this.selectedFlight = [];
     this.SavedFlightArrayObj= [];
-    this.SavedFlightArrayObjtest = [];
     this.data = [];
+    // this.state = {
+    //   currentDBFlights: [],
+    // }
   }
 
-//   snapshotToArray(snapshot) {
-//     var returnArr = [];
-
-//     snapshot.forEach(function(childSnapshot, index) {
-//         var item = childSnapshot.val();
-//         item.key = index;
-
-//         returnArr.push(item);
-//     });
-
-//     return returnArr;
-// };
-  
-// getSavedFlightresponse(response){
-//   this.data.push(response);
+// pushToSAO (data) {
+//   this.SavedFlightArrayObj.push(data);
 // }
 
-pushToSAO (data) {
-  console.log(data);
-  this.SavedFlightArrayObj.push(data);
-}
+// readFromDatabase(){
 
-  getSavedFlightArrayObj() {
-    var database = firebase.database().ref('fligt/'+ "savedfligt");
-    var current = [];
-   // database.on('value', function(snapshot)   {
-      // if (snapshot.exists){
-      //   snapshot.then(fligt => this.getSavedFlightresponse(fligt));
-      // }
-
-     
-database.once("value")
-  .then(function(snapshot) { 
-  current = snapshot.val();
-  console.log(current);
-},(this.SavedFlightArrayObj = current,console.log(this.SavedFlightArrayObj)));
-
-
-      // database.once('value', function(snapshot) {
-      //   snapshot.forEach(function(childSnapshot) {
-      //     var childKey = childSnapshot.key;
-      //     var childData = childSnapshot.val();
-      //     console.log(childData);
-      //     // if (!this.SavedFlightArrayObj) {
-      //     // this.SavedFlightArrayObj = childData
-      //     // }
-      //     //console.log("SparadeFlygfråndatabasen",this.SavedFlightArrayObj)
-      //   });
-      //   console.log(snapshot.exportVal())
-      //   //this.SavedFlightArrayObj.push(1);
-      // });
-    
-      
-      // this.SavedFlightArrayObjtest = snapshot.val();
-      // console.log(this.SavedFlightArrayObjtest);
-         
-  //});
-    
-     return this.SavedFlightArrayObj;
+//   var database = firebase.database().ref('fligt/'+ "savedfligt");
+//   //var current = [];
+//   return database.once("value").then((snapshot) => {
+//       var current = snapshot.val();
+//       this.setState({currentDBFlights : currrent})
+//       }
+//   );
+// }
+  fetchSavedFlightArray() {
+    var database = firebase.database().ref('fligt/'+ "savedfligt");     
+     database.once("value")
+      .then((snapshot) => { 
+        this.notifyObservers({action: "fetchSavedFlightObj", value: snapshot.val()})
+    })        
   }
 
   pushToSAO (data) {
     this.SavedFlightArrayObj.push(data);
+    console.log("data: ", data);
   }
 
   setSavedFlightArrayObj() {
-      //this.SavedFlightArrayObj.push(this.selectedFlight[0]);
       this.SavedFlightArrayObj.push(this.selectedFlight);
-      console.log(this.flightsData);
+      console.log("this.flightData: ",this.flightsData);
       
-      console.log("setSavedFlightArrayObj:",this.SavedFlightArrayObj);
+      console.log("setSavedFlightArrayObjbefore:",this.SavedFlightArrayObj);
       this.SavedFlightArrayObj.map((flights, index) => {
         flights.map((flight) => {
-
-      firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
-          currency : flight.currency,
-          departureDate : flight.departureDate,
-          destination : flight.destination,
-          inboundCarrier : flight.inboundCarrier,
-          price : flight.price,
-          quoteId : flight.quoteId,
-          returnDate : flight.returnDate,
-          source : flight.source
-      }) 
-    })
+            firebase.database().ref('fligt/'+ "savedfligt/"+index).set({
+                currency : flight.currency,
+                departureDate : flight.departureDate,
+                destination : flight.destination,
+                inboundCarrier : flight.inboundCarrier,
+                outboundCarrier : flight.outboundCarrier,
+                price : flight.price,
+                quoteId : flight.quoteId,
+                returnDate : flight.returnDate,
+                source : flight.source
+          }) 
+        })
+      });
     
-    });
+      console.log("setSavedFlightArrayObjAfter:",this.SavedFlightArrayObj);
     
-    this.selectedFlight.map(flight => {
-      console.log(flight.currency)
-    })
+    // this.selectedFlight.map(flight => {
+    //   })
   }
 
-  // deleteSavedFlight(newSavedFlightArray) {
-  //   this.SavedFlightArrayObj = newSavedFlightArray;
-  //   console.log(this.SavedFlightArrayObj);
-  // }
   deleteSavedFlight(id){
-    //this.SavedFlightArrayObj = this.SavedFlightArrayObj.filter(() => this.selectedFlight);
- 
     this.SavedFlightArrayObj.splice(id - 1, 1);
-    console.log(this.SavedFlightArrayObj,id);
- 
-   //  this.notifyObservers({action: "deletedFlight", value: this.getSavedFlightArrayObj()})
-   }
+     }
 
   getflightQuotes() {
     return this.flightQuotes;    
@@ -167,6 +121,10 @@ database.once("value")
   getSelectedFlight() {
     return this.selectedFlight;
   }  
+
+  getCurrentDBFlights(){
+    return this.currentDBFlights;
+  }
 
   setflightCarriers(num) {
     this.flightCarriers = num;
