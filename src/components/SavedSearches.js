@@ -1,23 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
-import * as firebase from 'firebase';
 
 const SavedSearches = (props) => {
-
-    let counter= 0;
-    let deleteCounter = 1;
     let [savedFlisgthsArray, setSavedFlightsArray]= useState([]);
-
-    function getFlight(id) {
-        if(savedFlisgthsArray !== []){
-            props.model.setSelectedFlight(savedFlisgthsArray[id]);
-        }
-    }
-
-    function buySaved(e) {
-        console.log("e.target.id",e.target.id);
-        getFlight(e.target.id);
-    }
 
     function onDelete(e) {
         props.model.deleteSavedFlight(e.target.id);
@@ -34,14 +19,12 @@ const SavedSearches = (props) => {
     }, []);
 
     function update(changes) {
-        //reset state containing flights
-        if (changes.action === "deletedFlight" || changes.action == "fetchSavedFlightObj"){
+        if (changes.action == "fetchSavedFlightObj"){
             console.log("hola " + changes.value)
             setSavedFlightsArray(changes.value);            
         }
     }
 
-    
     let savedFlights = savedFlisgthsArray.map( flight =>
             (
             <div>
@@ -57,15 +40,26 @@ const SavedSearches = (props) => {
                </div>
                <div>
                   <p><strong>Price for {props.model.getNumberOfPassengers()} persons:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
-                  <Link to ="/purchase">
-                  <button className="button" id={counter++} onClick={buySaved}> Buy</button> 
+                  <Link to = '/purchase'>
+                  <button className="button"> Buy</button>
                   </Link>
-                  <button className="button" id={deleteCounter++} onClick={onDelete}>Delete</button>
+                  <button className="button" id={flight.key} onClick={onDelete}>Delete</button>
            </div>
            </div>
             )
       );
 
+    if(savedFlisgthsArray.length == 0) {
+        return(
+            <div>
+            <Link to="/search">
+                <button className="button"> Back to search</button>
+            </Link>
+            <h1>You did not save any flight</h1>         
+            </div>
+        );
+    }
+    else{  
     return(
         <div>
             <Link to="/search">
@@ -73,10 +67,10 @@ const SavedSearches = (props) => {
             </Link>
             <h1>Ready to book your flight?</h1>
             <p><i>You're just one click away . . .</i></p>
-            {savedFlights}
-            
+            {savedFlights}   
          </div>
-    );
+        );
+    }
 }
 
 export default SavedSearches;

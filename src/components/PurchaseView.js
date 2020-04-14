@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 const PurchaseView = (props) => {
-
-  let boughtFlight = props.model.getSelectedFlight().map(flight =>
+  
+  let boughtFlight = props.model.getSelectedFlight().map(flight =>      
           (
               <div>
                   <div>
@@ -30,7 +30,6 @@ return(
           <button className="button"> Back to search</button>
         </Link>
         <h1>You're all set!</h1>
-        <h3><i>Time to pack your bags!</i></h3>
         <h3> Here's your flight information: </h3>
         {boughtFlight}
     </div>

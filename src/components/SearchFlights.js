@@ -5,7 +5,6 @@ import Passengers from "./Passengers";
 import React, {useState} from 'react';
 import Flights from "./Flights";
 import { Link } from "react-router-dom";
-import * as firebase from 'firebase';
 
   const SearchFlights = (props) => {
  

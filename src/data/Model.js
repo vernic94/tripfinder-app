@@ -18,21 +18,21 @@ class Model extends ObservableModel {
     this.flightsData = [];
     this.selectedFlight = [];
     this.data = [];
-   // this.database = firebase.database().ref('fligt/'+ "savedfligt");
-    // this.state = {
-    //   currentDBFlights: [],
-    // }
   }
-
 
   fetchSavedFlightArray() {
     console.log("here in fetchSave")
     var databaseRef =  firebase.database().ref('flights');
     databaseRef.once("value")
       .then((snapshot) => { 
-        let flightList = snapshot.val();
-        console.log(Object.keys(flightList))
-        flightList = Object.keys(flightList).map(key => flightList[key][0])
+        let flightList = snapshot.val() || [];
+          if (flightList) {
+          for (let key in flightList) {
+            flightList[key][0]["key"] = key
+          }
+
+          flightList = Object.keys(flightList).map(key => flightList[key][0])
+        }
         this.notifyObservers({action: "fetchSavedFlightObj", value: flightList})
     })        
   }
@@ -45,12 +45,7 @@ class Model extends ObservableModel {
 
   deleteSavedFlight(id){
     var database = firebase.database().ref('flights/');     
-    database.child(id - 1).remove().then( obj => {
-      console.log(obj)
-      this.notifyObservers({action: "deletedFlight", value: this.SavedFlightArrayObj})
-
-    })
-    this.SavedFlightArrayObj.splice(id - 1, 1);
+    database.child(id).remove().then( obj => this.fetchSavedFlightArray())
   }
 
   getflightQuotes() {
@@ -104,9 +99,11 @@ class Model extends ObservableModel {
   setflightCurrencies(num) {
     this.flightCurrencies = num;
   }
+
   setflightPlaces(num) {
     this.flightPlaces = num;
   }
+
   setflightQuotes(num) {
     this.flightQuotes = num;
   }
@@ -116,17 +113,13 @@ class Model extends ObservableModel {
     this.notifyObservers({action: "setNumberOfPassengers", value: num})
   }
 
-
   setArrivalPlace(place) {
     this.arrivalPlace = place;
-    //localStorage.setItem("cityArr", place["PlaceId"]);
     this.notifyObservers({action: "setArrivalPlace", value: place})
   }
 
   setDeparturePlace(place) {    
-    this.departurePlace = place;
-    //console.log(place);
-   // localStorage.setItem("cityDet", place["PlaceId"]);         
+    this.departurePlace = place;        
     this.notifyObservers({action: "setDeparturePlace", value: place})
   }
 

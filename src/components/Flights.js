@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import { Link } from "react-router-dom";
-import * as firebase from 'firebase';
 
  const Flights = (props) => {
     
-        let [confirmPurchase, setConfirmPurchase] = useState(false);
-    
-        function getFlight(id) {
-            let selectedFlight = flightInfo.filter(flight => id == flight.quoteId);
-            if(selectedFlight !== []){
-                props.model.setSelectedFlight(selectedFlight);   
-            }
+    function getFlight(id) {
+        let selectedFlight = flightInfo.filter(flight => id == flight.id);
+        if(selectedFlight !== []){
+            props.model.setSelectedFlight(selectedFlight);   
         }
+    }
 
     function saveFlight(e){
         console.log(e.target.id)
@@ -20,7 +17,7 @@ import * as firebase from 'firebase';
         alert("This flight has been saved!");
     }   
     
-    function chooseFlight(e,b){
+    function chooseFlight(e){
         getFlight(e.target.id);       
     }   
 
