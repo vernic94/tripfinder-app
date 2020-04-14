@@ -2,17 +2,35 @@ import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 
 const SavedSearches = (props) => {
-    let [savedFlisgthsArray, setSavedFlightsArray]= useState([]);
+    let [savedFligthsArray, setSavedFlightsArray]= useState([]);
+    let [boughtFlight, setBoughtFlight] = useState([]);
 
     function onDelete(e) {
         props.model.deleteSavedFlight(e.target.id);
-        console.log("e.target.id",e.target.id);
     }
+
+    function getFlight(id) {
+            let selectedFlight = savedFligthsArray.filter(flight => id == flight.id);
+        //console.log("savedFlisgths: ", savedFligths);
+        console.log("id: ", id);
+        //console.log("flight.id: ", flight.id);
+        if(selectedFlight !== []){
+            props.model.setSelectedFlight(selectedFlight);
+            console.log("selectedFlight: ", selectedFlight);   
+        }
+    }   
+    
+    function chooseFlight(e){
+        // let selectedFlight = props.model.buySavedFlight(e.target.id);
+        // props.model.setSelectedFlight(selectedFlight);
+        // console.log("selectedFlight: ", selectedFlight); 
+        getFlight(e.target.value);       
+    }   
 
     useEffect(() => {
         props.model.fetchSavedFlightArray();
+        //props.model.setSelectedFlight(boughtFlight);
         props.model.addObserver(update);
-        console.log("here")
         return function cleanup() {
             props.model.removeObserver(props);
         };
@@ -20,12 +38,16 @@ const SavedSearches = (props) => {
 
     function update(changes) {
         if (changes.action == "fetchSavedFlightObj"){
-            console.log("hola " + changes.value)
             setSavedFlightsArray(changes.value);            
+        }
+        if (changes.action == "setSelectedFlight"){
+            //props.model.setSelectedFlight(changes.value);
+            setBoughtFlight(changes.value);  
+            // console.log("setBoughtflight:", setBoughtFlight)          
         }
     }
 
-    let savedFlights = savedFlisgthsArray.map( flight =>
+    let savedFlights = savedFligthsArray.map(flight =>
             (
             <div>
                 <div>
@@ -41,15 +63,15 @@ const SavedSearches = (props) => {
                <div>
                   <p><strong>Price for {props.model.getNumberOfPassengers()} persons:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
                   <Link to = '/purchase'>
-                  <button className="button"> Buy</button>
+                  <button className="button" id={flight.key} onClick={chooseFlight}> Buy </button>
                   </Link>
                   <button className="button" id={flight.key} onClick={onDelete}>Delete</button>
-           </div>
+               </div>
            </div>
             )
       );
 
-    if(savedFlisgthsArray.length == 0) {
+    if(savedFligthsArray.length == 0) {
         return(
             <div>
             <Link to="/search">

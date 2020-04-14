@@ -48,6 +48,11 @@ class Model extends ObservableModel {
     database.child(id).remove().then( obj => this.fetchSavedFlightArray())
   }
 
+  // buySavedFlight(id){
+  //   var database = firebase.database().ref('flights/');     
+  //   database.child(id).then( obj => this.setSelectedFlight());
+  // }
+
   getflightQuotes() {
     return this.flightQuotes;    
   }

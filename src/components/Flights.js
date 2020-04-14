@@ -6,18 +6,19 @@ import { Link } from "react-router-dom";
     function getFlight(id) {
         let selectedFlight = flightInfo.filter(flight => id == flight.id);
         if(selectedFlight !== []){
-            props.model.setSelectedFlight(selectedFlight);   
+            props.model.setSelectedFlight(selectedFlight);  
+            console.log("flights, selectedFlights: ", selectedFlight); 
         }
     }
 
     function saveFlight(e){
-        console.log(e.target.id)
         let selectedFlight = flightInfo.filter(flight => e.target.id == flight.id);
         props.model.saveFlightToDB(selectedFlight)
         alert("This flight has been saved!");
     }   
     
     function chooseFlight(e){
+        console.log("here in Fllights choose flight")
         getFlight(e.target.id);       
     }   
 
