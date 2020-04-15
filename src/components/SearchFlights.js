@@ -10,26 +10,26 @@ import { Link } from "react-router-dom";
  
   let [showFlights, setShowFlights ] = useState(false);
 
-    function handleOnClick() {
-      setShowFlights(false);
-      getResponseFlights();     
-    }
-       
-    function getResponseFlights(){
+  function handleOnClick() {
+    setShowFlights(false);
+    getResponseFlights();     
+  }
       
-      props.model.getAllFlights()
-      .then(response => {
-        props.model.setflightQuotes(response["Quotes"])        
-        props.model.setflightPlaces(response["Places"] );
-        props.model.setflightCarriers(response["Carriers"]);  
-        props.model.setflightCurrencies(response["Currencies"]);   
-        setShowFlights(true);        
-        
-       })
-       .catch(err => {
-           console.log(err);
-       });
-    }
+  function getResponseFlights(){
+    
+    props.model.getAllFlights()
+    .then(response => {
+      props.model.setflightQuotes(response["Quotes"])        
+      props.model.setflightPlaces(response["Places"] );
+      props.model.setflightCarriers(response["Carriers"]);  
+      props.model.setflightCurrencies(response["Currencies"]);   
+      setShowFlights(true);        
+      
+      })
+      .catch(err => {
+          console.log(err);
+      });
+  }
 
   return (
     

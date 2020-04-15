@@ -2,60 +2,48 @@ import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 
 const SavedSearches = (props) => {
-
-    let counter= 0;
-    let deleteCounter = 1;
-    let [savedFlightsArray, setSavedFlightsArray]= useState([]);
-
-    function getFlight(id) {
-        // let selectedFlight = props.model.getSavedFlightArrayObj().filter(() => id == id);
-        let selectedFlight = props.model.getSavedFlightArrayObj()
-        if(selectedFlight !== []){
-            props.model.setSelectedFlight(selectedFlight[id]);
-        }
-    }
-
-    function buySaved(e) {
-        console.log("e.target.id",e.target.id);
-        getFlight(e.target.id);
-    }
+    let [savedFligthsArray, setSavedFlightsArray]= useState([]);
+    let [boughtFlight, setBoughtFlight] = useState([]);
 
     function onDelete(e) {
-        setSavedFlightsArray([]);
-        //getFlight(e.target.id);
         props.model.deleteSavedFlight(e.target.id);
-        console.log("e.target.id",e.target.id);
-        // let id = parseInt(e.target.id);
-        // if(id === 0) {
-        //     SavedFlightArray = props.model.getSavedFlightArrayObj();
-        // }
-        // let newSavedFlightArray = props.model.getSavedFlightArrayObj().filter(flight => SavedFlightArray.indexOf(flight) !== id)
-        // props.model.deleteSavedFlight(newSavedFlightArray);
     }
 
-    useEffect(() => {
-        props.model.addObserver(update);
+    function getFlight(id) {
+        let selectedFlight = savedFligthsArray.filter(flight => id == flight.key);
+        if(selectedFlight !== []){
+            props.model.setSelectedFlight(selectedFlight);
+        }
+    }   
+    
+    function chooseFlight(e){
+        getFlight(e.target.id);       
+    }   
 
+    useEffect(() => {
+        props.model.fetchSavedFlightArray();
+        props.model.addObserver(update);
         return function cleanup() {
             props.model.removeObserver(props);
         };
-    });
+    }, []);
 
     function update(changes) {
-        //reset state containing flights
-        if (changes.action === "deletedFlight"){
+        if (changes.action == "fetchSavedFlightObj"){
             setSavedFlightsArray(changes.value);            
+        }
+        if (changes.action == "setSelectedFlight"){
+            setBoughtFlight(changes.value);          
         }
     }
 
-    let savedFlights = props.model.getSavedFlightArrayObj().map( flights =>
-        (flights.map(flight=>
+    let savedFlights = savedFligthsArray.map(flight =>
             (
             <div>
                 <div>
                  <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
                  <p>{flight.departureDate}</p>
-                 <p>{flight.outboundCarrier["Name"]}</p>
+                <p>{flight.outboundCarrier["Name"]}</p>
               </div>
               <div>
                  <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
@@ -64,15 +52,26 @@ const SavedSearches = (props) => {
                </div>
                <div>
                   <p><strong>Price for {props.model.getNumberOfPassengers()} persons:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
-                  <Link to ="/purchase">
-                  <button className="button" id={counter++} onClick={buySaved}> Buy</button> 
+                  <Link to = '/purchase'>
+                  <button className="button" id={flight.key} onClick={chooseFlight}> Buy </button>
                   </Link>
-                  <button className="button" id={deleteCounter++} onClick={onDelete}>Delete</button>
+                  <button className="button" id={flight.key} onClick={onDelete}>Delete</button>
+               </div>
            </div>
-           </div>
-            )))
+            )
       );
 
+    if(savedFligthsArray.length == 0) {
+        return(
+            <div>
+            <Link to="/search">
+                <button className="button"> Back to search</button>
+            </Link>
+            <h1>You did not save any flight</h1>         
+            </div>
+        );
+    }
+    else{  
     return(
         <div>
             <Link to="/search">
@@ -80,10 +79,10 @@ const SavedSearches = (props) => {
             </Link>
             <h1>Ready to book your flight?</h1>
             <p><i>You're just one click away . . .</i></p>
-            {savedFlights}
-            
+            {savedFlights}   
          </div>
-    );
+        );
+    }
 }
 
 export default SavedSearches;

@@ -1,34 +1,26 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
-import * as firebase from 'firebase';
 
  const Flights = (props) => {
     
-        // var database = firebase.database().ref('fligt/'+ "savedfligt/saved");
-    
-        let [confirmPurchase, setConfirmPurchase] = useState(false);
-    
-        function getFlight(id) {
-            let selectedFlight = flightInfo.filter(flight => id == flight.quoteId);
-            if(selectedFlight !== []){
-                props.model.setSelectedFlight(selectedFlight);   
-                // database.on('value', function(snapshot)   {
-    
-                //     console.log("Read from the serever: ",snapshot.val());
-                // });
-            }
+    function getFlight(id) {
+        let selectedFlight = flightInfo.filter(flight => id == flight.id);
+        if(selectedFlight !== []){
+            props.model.setSelectedFlight(selectedFlight);  
         }
+    }
 
-    function saveFlight(e,b){
-        getFlight(e.target.id);
-        props.model.setSavedFlightArrayObj();
+    function saveFlight(e){
+        let selectedFlight = flightInfo.filter(flight => e.target.id == flight.id);
+        props.model.saveFlightToDB(selectedFlight)
         alert("This flight has been saved!");
     }   
-    function chooseFlight(e,b){
+    
+    function chooseFlight(e){
         getFlight(e.target.id);       
     }   
 
-    let flightInfo = props.quotes.map(flight =>
+    let flightInfo = props.quotes.map((flight, index) =>
         ({
             source: props.places.find(a => a["PlaceId"] === flight["OutboundLeg"]["OriginId"]),
             destination: props.places.find(a => a["PlaceId"] === flight["OutboundLeg"]["DestinationId"]),
@@ -38,10 +30,8 @@ import * as firebase from 'firebase';
             outboundCarrier: props.carriers.find(carrier => carrier["CarrierId"] === flight["OutboundLeg"]["CarrierIds"][0]),
             inboundCarrier: props.carriers.find(carrier => carrier["CarrierId"] === flight["InboundLeg"]["CarrierIds"][0]),
             currency: props.currencies[0],
-            quoteId: flight["QuoteId"] -1,
+            id: index
     }));    
-        
-        console.log("flightinfo:", flightInfo)
 
     let flights = flightInfo.map(function (flight, index) {
             return  (       
@@ -58,15 +48,14 @@ import * as firebase from 'firebase';
                  </div>
                  <div>
                     <p><strong>Price per person:</strong> {flight.price} {flight.currency["Code"]}</p>
-                    <button className="button" id={flight.quoteId} onClick={saveFlight}> Save</button> 
+                    <button className="button" id={flight.id} onClick={saveFlight}> Save</button> 
                     <Link to ="/purchase">           
-                    <button className="button" id={flight.quoteId} onClick={chooseFlight}> Buy</button>  
+                    <button className="button" id={flight.id} onClick={chooseFlight}> Buy</button>  
                     </Link>      
                  </div>
                </div>
             )
         });
-        console.log("flights:",flights)
 
     if(flightInfo.length > 0) {
         return(
@@ -78,17 +67,17 @@ import * as firebase from 'firebase';
     else{
         return (
             <div>
-                <div>
-                    <h3><em>No flights available</em></h3>
-                    <p> <strong>From: </strong>{props.model.flightPlaces[1]["Name"]} - {props.model.flightPlaces[1]["IataCode"]}</p>
-                    <p>{props.model.departureDate}</p>
-                </div>
-                <div>
-                    <p><strong>To: </strong> {props.model.flightPlaces[0]["Name"]} - {props.model.flightPlaces[0]["IataCode"]}</p>
-                   <p>{props.model.returnDate}</p>
-                </div>
+            <div>
+                <h3><em>No flights available</em></h3>
+                <p> <strong>From: </strong>{props.model.departurePlace["PlaceName"]} - {props.model.departurePlace["PlaceId"]}</p>
+                <p>{props.model.departureDate}</p>
             </div>
-        )
+            <div>
+                <p><strong>To: </strong> {props.model.arrivalPlace["PlaceName"]} - {props.model.arrivalPlace["PlaceId"]}</p>
+               <p>{props.model.returnDate}</p>
+            </div>
+            </div>
+        )    
     }
  
     

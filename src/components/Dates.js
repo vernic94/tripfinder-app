@@ -24,24 +24,14 @@ function update(changes) {
     }
 }
 
-// function changeDepartureDate(date) {
-//   props.model.setDepartureDate(date);
-// }
-
-// function changeReturnDate(date) {
-//   props.model.setReturnDate(date);
-// }
-
   return (
     <div className="search">
       <p> Depart <input placeholder=""
                   type="date"
-                  //value={props.modelInstance.getDepartureDate}
                   onChange={(e) => props.model.setDepartureDate(e.target.value)}>
                     </input> 
-      Return <input placeholder="" 
+          Return <input placeholder="" 
                   type="date"
-                  //value={props.modelInstance.getReturnDate}
                   onChange={(e) => props.model.setReturnDate(e.target.value)}>
         </input>
         </p>
