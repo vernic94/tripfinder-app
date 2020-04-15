@@ -10,7 +10,7 @@ const SavedSearches = (props) => {
     }
 
     function getFlight(id) {
-            let selectedFlight = savedFligthsArray.filter(flight => id == flight.id);
+            let selectedFlight = savedFligthsArray.filter(flight => id == flight.key);
         //console.log("savedFlisgths: ", savedFligths);
         console.log("id: ", id);
         //console.log("flight.id: ", flight.id);
@@ -24,7 +24,7 @@ const SavedSearches = (props) => {
         // let selectedFlight = props.model.buySavedFlight(e.target.id);
         // props.model.setSelectedFlight(selectedFlight);
         // console.log("selectedFlight: ", selectedFlight); 
-        getFlight(e.target.value);       
+        getFlight(e.target.id);       
     }   
 
     useEffect(() => {
