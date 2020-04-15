@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 
  const Flights = (props) => {
@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
         let selectedFlight = flightInfo.filter(flight => id == flight.id);
         if(selectedFlight !== []){
             props.model.setSelectedFlight(selectedFlight);  
-            console.log("flights, selectedFlights: ", selectedFlight); 
         }
     }
 
@@ -18,7 +17,6 @@ import { Link } from "react-router-dom";
     }   
     
     function chooseFlight(e){
-        console.log("here in Fllights choose flight")
         getFlight(e.target.id);       
     }   
 

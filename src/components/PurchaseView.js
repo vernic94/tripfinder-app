@@ -22,8 +22,6 @@ const PurchaseView = (props) => {
              </div>
         ));
 
-console.log("boughtflight in purchase",boughtFlight)
-
 return(
     <div>
         <Link to="/search">

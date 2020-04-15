@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from "react-router-dom";
-import Welcome from "./Welcome";
+import Welcome from "./components/Welcome";
 import Flights from "./components/Flights";
 import SearchFlights from './components/SearchFlights';
 import "./index.css";
@@ -9,7 +9,6 @@ import modelInstance from "./data/Model"
 import { Component } from "react";
 import SavedSearches from './components/SavedSearches';
 import PurchaseView from "./components/PurchaseView";
-import flightInstance from './components/Flights';
 
 class App extends Component {
   

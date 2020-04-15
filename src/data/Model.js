@@ -21,7 +21,6 @@ class Model extends ObservableModel {
   }
 
   fetchSavedFlightArray() {
-    console.log("here in fetchSave")
     var databaseRef =  firebase.database().ref('flights');
     databaseRef.once("value")
       .then((snapshot) => { 
@@ -47,11 +46,6 @@ class Model extends ObservableModel {
     var database = firebase.database().ref('flights/');     
     database.child(id).remove().then( obj => this.fetchSavedFlightArray())
   }
-
-  // buySavedFlight(id){
-  //   var database = firebase.database().ref('flights/');     
-  //   database.child(id).then( obj => this.setSelectedFlight());
-  // }
 
   getflightQuotes() {
     return this.flightQuotes;    
