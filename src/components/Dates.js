@@ -24,10 +24,32 @@ function update(changes) {
     }
 }
 
+// function getTodaysDate(){
+//   let today = new Date();
+//   let date;
+//   console.log(today);
+//   if((today.getMonth()+1) > 9 && today.getDate() > 9){
+//   date = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+//   }
+//   else if((today.getMonth()+1) < 10){
+//     date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-" + today.getDate();
+//   }
+//   else if(today.getDate() < 10){
+//     date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-0" + today.getDate();
+//   }
+//   console.log(date);
+
+//   return date;
+// }
+
+// let today = getTodaysDate();
   return (
+    
     <div className="search">
       <p> Depart <input placeholder=""
                   type="date"
+                  // defaultValue={today} 
+                  // min={today}
                   onChange={(e) => props.model.setDepartureDate(e.target.value)}>
                     </input> 
           Return <input placeholder="" 

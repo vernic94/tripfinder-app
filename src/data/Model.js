@@ -3,6 +3,17 @@ import ObservableModel from "./ObservableModel";
 import * as constants from "./apiConfig";
 import * as firebase from 'firebase';
 
+// var firebaseConfig = {
+//   apiKey: "AIzaSyCVROIjVhBzdK69OwROxJVqPfEskc2Ards",
+//     authDomain: "trippadvicer-project.firebaseapp.com",
+//     databaseURL: "https://trippadvicer-project.firebaseio.com",
+//     projectId: "trippadvicer-project",
+//     storageBucket: "trippadvicer-project.appspot.com",
+//     messagingSenderId: "667211405537",
+//     appId: "1:667211405537:web:9b371698082eef7b7ebfa0",
+//     measurementId: "G-69HJ73Q14B"
+// }
+
 class Model extends ObservableModel {
   constructor() {
     super();
@@ -21,7 +32,8 @@ class Model extends ObservableModel {
   }
 
   fetchSavedFlightArray() {
-    var databaseRef =  firebase.database().ref('flights');
+    //firebase.initializeApp(firebaseConfig)
+    var databaseRef = firebase.database().ref('flights');
     databaseRef.once("value")
       .then((snapshot) => { 
         let flightList = snapshot.val() || [];
@@ -37,7 +49,7 @@ class Model extends ObservableModel {
   }
 
   saveFlightToDB(flight) {
-    var databaseRef =  firebase.database().ref('flights/');
+    var databaseRef = firebase.database().ref('flights/');
     const newKey = databaseRef.push().key;
     databaseRef.child(newKey).set(flight);
   }
