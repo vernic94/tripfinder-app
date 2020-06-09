@@ -7,7 +7,6 @@ const Passengers = (props) => {
 
 useEffect(() => {
     props.model.addObserver(update);
-
     return function cleanup() {
         props.model.removeObserver(props);
     };
@@ -20,6 +19,9 @@ function update(changes) {
 }
 
 function changeNumberOfPassengers(e){
+  if(e.target.value < 1){
+    alert("There must be at least one passenger. Please choose a valid number of passengers.")
+  }
   props.model.setNumberOfPassengers(e.target.value);
 }
 

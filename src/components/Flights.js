@@ -78,31 +78,45 @@ import { Link } from "react-router-dom";
     else{
         return (
             <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Depart</th>
-                        <th>Return</th>
-                        <th>Depart Airline</th>
-                        <th>Return Airline</th>
-                        <th>Price Per Person</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{props.model.departurePlace["PlaceName"]} - {props.model.departurePlace["PlaceId"]}</td>
-                        <td>{props.model.arrivalPlace["PlaceName"]} - {props.model.arrivalPlace["PlaceId"]}</td>
-                        <td>{props.model.departureDate}</td>
-                        <td>{props.model.returnDate}</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            <div>
+                <h3><em>No flights available</em></h3>
+                <p> <strong>From: </strong>{props.model.departurePlace["PlaceName"]} - {props.model.departurePlace["PlaceId"]}</p>
+                <p>{props.model.departureDate}</p>
+            </div>
+            <div>
+                <p><strong>To: </strong> {props.model.arrivalPlace["PlaceName"]} - {props.model.arrivalPlace["PlaceId"]}</p>
+               <p>{props.model.returnDate}</p>
+            </div>
+            <div>
+                <p>Please try searching on different dates or destinations</p>
+            </div>
+            </div>
+        //     <div>
+        //     <table>
+        //         <thead>
+        //             <tr>
+        //                 <th>From</th>
+        //                 <th>To</th>
+        //                 <th>Depart</th>
+        //                 <th>Return</th>
+        //                 <th>Depart Airline</th>
+        //                 <th>Return Airline</th>
+        //                 <th>Price Per Person</th>
+        //             </tr>
+        //         </thead>
+        //         <tbody>
+        //             <tr>
+        //                 <td>{props.model.departurePlace["PlaceName"]} - {props.model.departurePlace["PlaceId"]}</td>
+        //                 <td>{props.model.arrivalPlace["PlaceName"]} - {props.model.arrivalPlace["PlaceId"]}</td>
+        //                 <td>{props.model.departureDate}</td>
+        //                 <td>{props.model.returnDate}</td>
+        //                 <td>-</td>
+        //                 <td>-</td>
+        //                 <td>-</td>
+        //             </tr>
+        //         </tbody>
+        //     </table>
+        // </div>
         )    
     }
  
