@@ -2,19 +2,18 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../index.css";
 
-class Header extends Component {
+class Header2 extends Component {
   render() {
 
     return (
       <div class="topnav"> 
-        {/* <div className="topbar"> */}
         <h1 className="topbar">Tripfinder</h1>
-        <div>
+        <div >
             <Link to = "/">
             <button className="saved"> Home </button>
             </Link>
-            <Link to = "/savedSearches">
-            <button className="saved"> Saved flights </button>
+            <Link to="/search">
+                <button className="saved"> Back to search</button>
             </Link>
         </div>
       </div>
@@ -22,4 +21,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default Header2;

@@ -6,6 +6,7 @@ import React, {useState} from 'react';
 import Flights from "./Flights";
 import { Link } from "react-router-dom";
 import Loader from 'react-loader-spinner';
+import Header from "./Header";
 
   const SearchFlights = (props) => {
 
@@ -43,12 +44,11 @@ import Loader from 'react-loader-spinner';
       });
   }
 
-  return (
-    <div className="search">
-      {/* <Link to = "/savedSearches">
-      <button className="button"> Saved flights </button>
-      </Link> */}
-      <h1 className="welcome-text">Where would you like to go?</h1>
+  return ( 
+    <div className="welcome-text">
+       <Header></Header>
+
+      <h1>Where would you like to go?</h1>
   
       <ListPlaces model={props.model} />
       <h4> Which days would you like to go?</h4>

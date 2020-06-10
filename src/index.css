@@ -16,6 +16,14 @@ code {
   display: flex;
   flex-direction: column;
   align-content: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 .welcome-text{
   text-align: center;
@@ -86,17 +94,37 @@ input[type = text]{
 }
 
 .topnav {
-  overflow: hidden;
-  background-color: #e9e9e9;
+  /* overflow: hidden; */
+  background-color: whitesmoke;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  /* align-content: space-between; */
+  /* padding-top: 10px; */
 }
 
 /* Style the links inside the navigation bar */
-.topnav topbar{
+.topbar{
   float: left;
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+  /* display: flex; */
+  color: #282c34;
+  /* text-align: center; */
+  font-size: 30px;
+  padding: 10px 16px;
+  /* text-decoration: none; */
+}
+
+.saved{
+  float: right;
+  padding: 10px 10px;
+  color: #282c34;
+}
+
+.align-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
 }

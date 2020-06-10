@@ -82,7 +82,7 @@ const ListPlaces = (props) => {
     }
    
     return(
-        <div>
+        <div className= "welcome-text">
             <p>
             From <input placeholder="Enter departure city or country" 
                     type="text"

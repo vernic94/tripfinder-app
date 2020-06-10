@@ -54,41 +54,14 @@ import "../index.css";
             )
         });
 
-//     if(flightInfo.length > 0) {
-//         return(
-//             <div>
-//             <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
-//             <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
-//             </i></p>
-//             <h1> <strong>Search Results</strong></h1>
-//             <div className="container-flight-table">
-//                 <ul className="responsive-table">
-//                 <li className="table-header">
-//                         <div className="col col-1">From</div>
-//                         <div className="col col-2">To</div>
-//                         <div className="col col-3">Depart</div>
-//                         <div className="col col-4">Return</div>
-//                         <div className="col col-5">Depart Airline</div>
-//                         <div className="col col-6">Return Airline</div>
-//                         <div className="col col-7">Price Per Person</div>
-//                         </li>
-//     <li class="table-row">
-//                 <tbody>
-//                     {flights}
-//                 </tbody>
-//             </li>
-//   </ul>
-//             </div>
-//         </div>
-//         );
-//     }
 if(flightInfo.length > 0) {
     return(
-        <div>
+        <div className="align-center">
         <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
         <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
-        </i></p>
-        <h1> <strong>Search Results</strong></h1>
+        </i> <br></br>Click on the "saved flights" button in the topbar to view your saved flights.
+        </p>
+        <h1 > <strong>Search Results</strong></h1>
         <div>
         <ul className="table-header">
                     <th>From</th>
@@ -108,7 +81,7 @@ if(flightInfo.length > 0) {
 }
     else{
         return (
-            <div>
+            <div className= "align-center">
             <div>
                 <h3><em>No flights available</em></h3>
                 <p> <strong>From: </strong>{props.model.departurePlace["PlaceName"]} - {props.model.departurePlace["PlaceId"]}</p>

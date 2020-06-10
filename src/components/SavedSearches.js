@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
 import Loader from 'react-loader-spinner';
+import Header2 from './Header2';
 
 const SavedSearches = (props) => {
     let [savedFligthsArray, setSavedFlightsArray]= useState([]);
@@ -47,28 +48,6 @@ const SavedSearches = (props) => {
     }
 
     let savedFlights = savedFligthsArray.map(flight =>
-    //         (
-    //         <div>
-    //             <div>
-    //              <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
-    //              <p>{flight.departureDate}</p>
-    //             <p>{flight.outboundCarrier["Name"]}</p>
-    //           </div>
-    //           <div>
-    //              <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
-    //              <p>{flight.returnDate}</p>
-    //              <p>{flight.inboundCarrier["Name"]}</p>
-    //            </div>
-    //            <div>
-    //               <p><strong>Price for {props.model.getNumberOfPassengers()} persons:</strong> {flight.price * props.model.getNumberOfPassengers()} {flight.currency["Code"]}</p>
-    //               <Link to = '/purchase'>
-    //               <button className="button" id={flight.key} onClick={chooseFlight}> Buy </button>
-    //               </Link>
-    //               <button className="button" id={flight.key} onClick={onDelete}>Delete</button>
-    //            </div>
-    //        </div>
-    //         )
-    //   );
       (       
         <tr className="table-row" >
             <td>{flight.source["Name"]} - {flight.source["IataCode"]}</td>
@@ -91,13 +70,15 @@ const SavedSearches = (props) => {
     if(savedFligthsArray.length != 0){  
     return(
         <div>
-            <Link to="/search">
+            <Header2></Header2>
+            {/* <Link to="/search">
                 <button className="button"> Back to search</button>
-            </Link>
+            </Link> */}
+             <div className="align-center">
             {showLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
-            <h1>Ready to book your flight?</h1>
+            <h1 className="welcome-text">Ready to book your flight?</h1>
             <p><i>You're just one click away . . .</i></p>
-            <table className="table-header">
+            <table className=" table-header">
                     <th>From</th>
                     <th>To</th>
                     <th>Departure Date</th>
@@ -105,21 +86,22 @@ const SavedSearches = (props) => {
                     <th>Return Date</th>
                     <th>Airline</th>
                     <th>Price Per Person</th>
-            <tbody  className="table-row" >
-                {savedFlights} 
-            </tbody>
-        </table>  
+                <tbody  className="table-row" >
+                    {savedFlights} 
+                </tbody>
+            </table>  
+        </div>
          </div>
         );
     }
     else{
         return(
             <div>
-            <Link to="/search">
-                <button className="button"> Back to search</button>
-            </Link>
+            <Header2></Header2>
+            <div className= "align-center">
             {showLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
             {showText ? <h1>You have no saved flights yet!</h1> : null}       
+            </div>
             </div>
         );
     }
