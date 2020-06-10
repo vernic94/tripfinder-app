@@ -8,18 +8,13 @@ import { Link } from "react-router-dom";
 import Loader from 'react-loader-spinner';
 
   const SearchFlights = (props) => {
- 
+
   let [showFlights, setShowFlights ] = useState(false);
   let [showLoader, setShowLoader] = useState(false);
 
   function checkMandatoryFields(){
-    // console.log("dep date search: ", props.model.getDepartureDate());
-    // console.log("return date search: ", props.model.getReturnDate());
-    // console.log("arrival place search: ", props.model.arrivalPlace["PlaceId"]);
-    // console.log(props.model.departurePlace["PlaceId"])
-    // console.log("return place search: ", props.model.getArrivalPlace());
     if((props.model.getDepartureDate() == "") || (props.model.getReturnDate() == "") || (props.model.departurePlace["PlaceId"] == undefined) || (props.model.arrivalPlace["PlaceId"] == undefined)){
-      alert("The fields: From, To, Departure date and Return date are mandatory! Please fill in all necessary information and search again.")
+      alert("The fields: From, To, Departure and Return are mandatory! Please fill in all necessary information and search again.")
     }
     else{
       handleOnClick();
@@ -50,9 +45,9 @@ import Loader from 'react-loader-spinner';
 
   return (
     <div className="search">
-      <Link to = "/savedSearches">
+      {/* <Link to = "/savedSearches">
       <button className="button"> Saved flights </button>
-      </Link>
+      </Link> */}
       <h1 className="welcome-text">Where would you like to go?</h1>
   
       <ListPlaces model={props.model} />
@@ -62,8 +57,14 @@ import Loader from 'react-loader-spinner';
      
       <button className="button" onClick={checkMandatoryFields}> Search </button>
       {showLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
-      {showFlights ? <Flights model={props.model} quotes={props.model.getflightQuotes()} places={props.model.getflightPlaces()} carriers = {props.model.getflightCarriers()} currencies={props.model.getflightCurrencies()}/> : null}
-     
+      {showFlights ? 
+                  <Link to = "/otherDates">
+                  <button className="button" > Show flights for other dates </button>
+                  </Link>
+                  : null}
+      {showFlights ? 
+      <Flights model={props.model} quotes={props.model.getflightQuotes()} places={props.model.getflightPlaces()} carriers = {props.model.getflightCarriers()} currencies={props.model.getflightCurrencies()}/> 
+      : null}
     </div>
   );
 }

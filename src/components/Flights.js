@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import "../index.css";
 
  const Flights = (props) => {
-    
+
     function getFlight(id) {
         let selectedFlight = flightInfo.filter(flight => id == flight.id);
         if(selectedFlight !== []){
@@ -35,12 +36,12 @@ import { Link } from "react-router-dom";
 
     let flights = flightInfo.map(function (flight, index) {
             return  (       
-                    <tr key={index}>
+                    <tr className="table-row" key={index}>
                         <td>{flight.source["Name"]} - {flight.source["IataCode"]}</td>
                         <td>{flight.destination["Name"]} - {flight.destination["IataCode"]}</td>
                         <td>{flight.departureDate}</td>
-                        <td>{flight.returnDate}</td>
                         <td>{flight.outboundCarrier["Name"]}</td>
+                        <td>{flight.returnDate}</td>
                         <td>{flight.inboundCarrier["Name"]}</td>
                         <td>{flight.price} {flight.currency["Code"]}</td>
                         <td><button className="button" id={flight.id} onClick={saveFlight}> Save</button></td>
@@ -53,28 +54,58 @@ import { Link } from "react-router-dom";
             )
         });
 
-    if(flightInfo.length > 0) {
-        return(
-            <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Depart</th>
-                        <th>Return</th>
-                        <th>Depart Airline</th>
-                        <th>Return Airline</th>
-                        <th>Price Per Person</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {flights}
-                </tbody>
-            </table>
+//     if(flightInfo.length > 0) {
+//         return(
+//             <div>
+//             <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
+//             <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
+//             </i></p>
+//             <h1> <strong>Search Results</strong></h1>
+//             <div className="container-flight-table">
+//                 <ul className="responsive-table">
+//                 <li className="table-header">
+//                         <div className="col col-1">From</div>
+//                         <div className="col col-2">To</div>
+//                         <div className="col col-3">Depart</div>
+//                         <div className="col col-4">Return</div>
+//                         <div className="col col-5">Depart Airline</div>
+//                         <div className="col col-6">Return Airline</div>
+//                         <div className="col col-7">Price Per Person</div>
+//                         </li>
+//     <li class="table-row">
+//                 <tbody>
+//                     {flights}
+//                 </tbody>
+//             </li>
+//   </ul>
+//             </div>
+//         </div>
+//         );
+//     }
+if(flightInfo.length > 0) {
+    return(
+        <div>
+        <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
+        <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
+        </i></p>
+        <h1> <strong>Search Results</strong></h1>
+        <div>
+        <ul className="table-header">
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure Date</th>
+                    <th>Airline</th>
+                    <th>Return Date</th>
+                    <th>Airline</th>
+                    <th>Price Per Person</th>
+            <tbody  className="table-row" >
+                {flights} 
+            </tbody>
+            </ul>
         </div>
-        );
-    }
+    </div>
+    );
+}
     else{
         return (
             <div>
@@ -91,35 +122,8 @@ import { Link } from "react-router-dom";
                 <p>Please try searching on different dates or destinations</p>
             </div>
             </div>
-        //     <div>
-        //     <table>
-        //         <thead>
-        //             <tr>
-        //                 <th>From</th>
-        //                 <th>To</th>
-        //                 <th>Depart</th>
-        //                 <th>Return</th>
-        //                 <th>Depart Airline</th>
-        //                 <th>Return Airline</th>
-        //                 <th>Price Per Person</th>
-        //             </tr>
-        //         </thead>
-        //         <tbody>
-        //             <tr>
-        //                 <td>{props.model.departurePlace["PlaceName"]} - {props.model.departurePlace["PlaceId"]}</td>
-        //                 <td>{props.model.arrivalPlace["PlaceName"]} - {props.model.arrivalPlace["PlaceId"]}</td>
-        //                 <td>{props.model.departureDate}</td>
-        //                 <td>{props.model.returnDate}</td>
-        //                 <td>-</td>
-        //                 <td>-</td>
-        //                 <td>-</td>
-        //             </tr>
-        //         </tbody>
-        //     </table>
-        // </div>
         )    
     }
- 
     
 }
 

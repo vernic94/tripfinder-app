@@ -3,7 +3,7 @@ import React from 'react';
 const airports = (props) => {
 
     let items = props.places.map((item) => 
-      <p onClick={() => props.changePlace(item)}>City: {item["PlaceName"]} - Airport: {item["PlaceId"]}</p>
+      <p className="search-airports" onClick={() => props.changePlace(item)}>City: {item["PlaceName"]} - Airport: {item["PlaceId"]}</p>
     );
     return( 
         <div>
