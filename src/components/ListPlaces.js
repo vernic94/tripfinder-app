@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Airport from "./Airport";
+import Loader from 'react-loader-spinner';
+import "../index.css";
 
 const ListPlaces = (props) => {
 
@@ -11,6 +13,9 @@ const ListPlaces = (props) => {
     let [airportArrivalVisible, setAirportArrivalVisible] = useState(false);
     let [inputArrValue, setInputArrValue] = useState("");
     let [responseAirports, setResponseAirports] = useState({});
+
+    let [showDepLoader, setShowDepLoader] = useState(false);
+    let [showArrLoader, setShowArrLoader] = useState(false);
 
     useEffect(() => {
         props.model.addObserver(update);
@@ -32,26 +37,33 @@ const ListPlaces = (props) => {
     }
 
     function getDepartureDestinations(city) {
+        setShowDepLoader(true);
         setAirportDepartureVisible(true);
         setInputDepValue(city);
         getListPlaces(city);
         if (responseAirports["Places"]) {
+            //setShowLoader(false)
             setDepartureDestinations(responseAirports["Places"]);
         }
     }
 
     function getArrivalDestinations(city) {
+        setShowArrLoader(true);
         setAirportArrivalVisible(true);
         setInputArrValue(city);
         getListPlaces(city);
         if (responseAirports["Places"]) {
+            //setShowLoader(false)
             setArrivalDestinations(responseAirports["Places"]);
         }
     }
 
     function getListPlaces(city) {
+        //setShowLoader(true);
        props.model.getAirports(city)
         .then(response => {
+            setShowDepLoader(false);
+            setShowArrLoader(false);
             setResponseAirports(response)
         })
         .catch(err => {
@@ -60,15 +72,17 @@ const ListPlaces = (props) => {
     }
 
     function changeDeparturePlace(places) {
+        setShowDepLoader(false)
         props.model.setDeparturePlace(places);
     }
 
     function changeArrivalPlace(places) {
+        setShowArrLoader(false)
         props.model.setArrivalPlace(places);
     }
    
     return(
-        <div>
+        <div className= "welcome-text">
             <p>
             From <input placeholder="Enter departure city or country" 
                     type="text"
@@ -76,6 +90,7 @@ const ListPlaces = (props) => {
                     onChange={(e) => getDepartureDestinations(e.target.value)}
                    >
                 </input>
+                {showDepLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
                 {airportDepartureVisible ? <Airport places={departureDestinations} changePlace={changeDeparturePlace}></Airport> : null }
             
             To <input placeholder="Enter destination city or country" 
@@ -84,6 +99,7 @@ const ListPlaces = (props) => {
                     onChange={(e) => getArrivalDestinations(e.target.value)}
                    >
                 </input>
+                {showArrLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
                 {airportArrivalVisible ? <Airport places={arrivalDestinations} changePlace={changeArrivalPlace}></Airport> : null }
             </p>           
         </div>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import "../index.css";
 
  const Flights = (props) => {
-    
+
     function getFlight(id) {
         let selectedFlight = flightInfo.filter(flight => id == flight.id);
         if(selectedFlight !== []){
@@ -35,38 +36,54 @@ import { Link } from "react-router-dom";
 
     let flights = flightInfo.map(function (flight, index) {
             return  (       
-              <div key={index}>
-                  <div>
-                   <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
-                   <p>{flight.departureDate}</p>
-                   <p>{flight.outboundCarrier["Name"]}</p>
-                </div>
-                <div>
-                   <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
-                   <p>{flight.returnDate}</p>
-                   <p>{flight.inboundCarrier["Name"]}</p>
-                 </div>
-                 <div>
-                    <p><strong>Price per person:</strong> {flight.price} {flight.currency["Code"]}</p>
-                    <button className="button" id={flight.id} onClick={saveFlight}> Save</button> 
-                    <Link to ="/purchase">           
-                    <button className="button" id={flight.id} onClick={chooseFlight}> Buy</button>  
-                    </Link>      
-                 </div>
-               </div>
+                    <tr className="table-row" key={index}>
+                        <td>{flight.source["Name"]} - {flight.source["IataCode"]}</td>
+                        <td>{flight.destination["Name"]} - {flight.destination["IataCode"]}</td>
+                        <td>{flight.departureDate}</td>
+                        <td>{flight.outboundCarrier["Name"]}</td>
+                        <td>{flight.returnDate}</td>
+                        <td>{flight.inboundCarrier["Name"]}</td>
+                        <td>{flight.price} {flight.currency["Code"]}</td>
+                        <td><button className="button" id={flight.id} onClick={saveFlight}> Save</button></td>
+                        <td>
+                            <Link to ="/purchase">           
+                            <button className="button" id={flight.id} onClick={chooseFlight}> Buy</button>  
+                            </Link>
+                        </td>
+                    </tr>
             )
         });
 
-    if(flightInfo.length > 0) {
-        return(
-            <div>
-                {flights}
-            </div>
-        );
-    }
+if(flightInfo.length > 0) {
+    return(
+        <div >
+        <h1 > <strong>Search Results</strong></h1>
+        <div className="position-right">
+            <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
+            <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
+            </i> <br></br>To view your saved flights you can click on the "saved flights" button in the topbar.
+            </p>
+        </div>
+        <div>
+        <ul className="table-header">
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure Date</th>
+                    <th>Airline</th>
+                    <th>Return Date</th>
+                    <th>Airline</th>
+                    <th>Price Per Person</th>
+            <tbody  className="table-row" >
+                {flights} 
+            </tbody>
+            </ul>
+        </div>
+    </div>
+    );
+}
     else{
         return (
-            <div>
+            <div className= "align-center">
             <div>
                 <h3><em>No flights available</em></h3>
                 <p> <strong>From: </strong>{props.model.departurePlace["PlaceName"]} - {props.model.departurePlace["PlaceId"]}</p>
@@ -76,10 +93,12 @@ import { Link } from "react-router-dom";
                 <p><strong>To: </strong> {props.model.arrivalPlace["PlaceName"]} - {props.model.arrivalPlace["PlaceId"]}</p>
                <p>{props.model.returnDate}</p>
             </div>
+            <div>
+                <p>Please try searching on different dates or destinations</p>
+            </div>
             </div>
         )    
     }
- 
     
 }
 

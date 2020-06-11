@@ -9,7 +9,6 @@ const Dates = (props) => {
 
 useEffect(() => {
     props.model.addObserver(update);
-
     return function cleanup() {
         props.model.removeObserver(props);
     };
@@ -28,11 +27,11 @@ function update(changes) {
     <div className="search">
       <p> Depart <input placeholder=""
                   type="date"
-                  onChange={(e) => props.model.setDepartureDate(e.target.value)}>
+                  onChange={(e) => props.model.checkDepartureDate(e.target.value)}>
                     </input> 
           Return <input placeholder="" 
                   type="date"
-                  onChange={(e) => props.model.setReturnDate(e.target.value)}>
+                  onChange={(e) => props.model.checkReturnDate(e.target.value)}>
         </input>
         </p>
     </div>
