@@ -5,41 +5,21 @@ import Flights from "./Flights";
 import tomorrowDateD from "./TomorrowDateD";
 import yesterdayDateD from "./YesterdayDateD"
 import tomorrowDateR from "./TomorrowDateR";
-import yesterdayDateR from "./YesterdayDateR"
+import yesterdayDateR from "./YesterdayDateR";
+import Header2 from "./Header2";
     
-const SearchFlights = (props) => {
+const OtherDates = (props) => {
      
     let [showTomorrowDeparture, setTomorrowDeparture ] = useState(false);
     let [showYesterdayDeparture, setYesterdayDeparture ] = useState(false);
     let [showTomorrowReturn, setTomorrowReturn ] = useState(false);
     let [showYesterdayReturn, setYesterdayReturn ] = useState(false);
+    let [showFlights, setShowFlights ] = useState(false);
 
     let tomorrowD = tomorrowDateD()
     let yesterdayD = yesterdayDateD()
     let tomorrowR = tomorrowDateR();
     let yesterdayR = yesterdayDateR();
-    
-    // //spain
-    // let departurePlace = {
-    //         CityId: "-sky",
-    //         CountryId: "ES-sky",
-    //         CountryName: "Spain",
-    //         PlaceId: "ES-sky",
-    //         PlaceName: "Spain",
-    //         RegionId: ""
-    // }
-    // //amsterdam
-    // let arrivalPlace = {
-    //         CityId: "AMST-sky",
-    //         CountryId: "NL-sky",
-    //         CountryName: "Netherlands",
-    //         PlaceId: "AMS-sky",
-    //         PlaceName: "Amsterdam",
-    //         RegionId: ""
-    // }
-    // let departureDate = "2020-06-14"
-    // let returnDate = "2020-06-21"
-    // let numberOfPassengers = 1;
     
     function handleOnClick(option) {
         setDate(option)
@@ -62,15 +42,15 @@ const SearchFlights = (props) => {
                 props.model.setReturnDate(yesterdayR)
                 break;
             default:
-                // code block
         }
     }
 
     function showFlightsFalse() {
         setTomorrowDeparture(false);
         setYesterdayDeparture(false);
-        setTomorrowReturn(false)
-        setYesterdayReturn(false)
+        setTomorrowReturn(false);
+        setYesterdayReturn(false);
+        setShowFlights(false);
     }
 
     function showFlightsTrue(option) {
@@ -108,15 +88,28 @@ const SearchFlights = (props) => {
     }
     
       return (
-        
-        <div className="otherDates">
-            <Link to = "/search">
-            <button className="button"> Return to Search </button>
-            </Link>
-            <button className="button" onClick={() => handleOnClick(1)}> Show Flights from {tomorrowD} - {props.model.returnDate} </button>
-            <button className="button" onClick={() => handleOnClick(2)}> Show Flights from {yesterdayD} - {props.model.returnDate} </button>
-            <button className="button" onClick={() => handleOnClick(3)}> Show Flights from {props.model.departureDate} - {tomorrowR} </button>
-            <button className="button" onClick={() => handleOnClick(4)}> Show Flights from {props.model.departureDate} - {yesterdayR} </button>
+        <div>
+            {/* <Header2></Header2> */}
+        <div className="align-center">
+            <p>Quick-search on the availability on previous and next dates</p>
+            <div className="dates-alignment">
+            <div className="welcome-text">
+            <p>Departure Date</p>
+            <div className="dates-alignment">
+            <button className="extra-dates arrow" onClick={() => handleOnClick(2)}>&laquo;</button>
+            <p>{props.model.getDepartureDate()}</p>
+            <button className="extra-dates arrow" onClick={() => handleOnClick(1)}>&raquo;</button>
+            </div>
+            </div>
+            <div className="welcome-text">
+            <p>Return Date</p>
+            <div className="dates-alignment">
+            <button className="extra-dates arrow" onClick={() => handleOnClick(4)}>&laquo;</button>
+            <p>{props.model.getReturnDate()}</p>
+            <button className="extra-dates arrow" onClick={() => handleOnClick(3)}>&raquo;</button>
+            </div>
+            </div>
+            </div>   
             {showTomorrowDeparture ? <Flights 
                 model={props.model} 
                 quotes={props.model.getflightQuotes()} 
@@ -141,8 +134,15 @@ const SearchFlights = (props) => {
                 places={props.model.getflightPlaces()} 
                 carriers = {props.model.getflightCarriers()} 
                 currencies={props.model.getflightCurrencies()}/>: null}
+            {showFlights? <Flights 
+                    model={props.model} 
+                    quotes={props.model.getflightQuotes()} 
+                    places={props.model.getflightPlaces()} 
+                    carriers = {props.model.getflightCarriers()} 
+                    currencies={props.model.getflightCurrencies()}/> : null}
+        </div>
         </div>
       );
 }
     
-    export default SearchFlights;
+    export default OtherDates;

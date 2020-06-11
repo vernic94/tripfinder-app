@@ -9,7 +9,6 @@ import modelInstance from "./data/Model"
 import { Component } from "react";
 import SavedSearches from './components/SavedSearches';
 import PurchaseView from "./components/PurchaseView";
-import OtherDates from "./components/OtherDates";
 
 class App extends Component {
   
@@ -33,7 +32,6 @@ class App extends Component {
           <Route exact path="/flights" render={() => <Flights model= {modelInstance}/>}/>
           <Route exact path="/savedSearches" render={() => <SavedSearches model={modelInstance}/>} />
           <Route exact path="/purchase" render={() => <PurchaseView model= {modelInstance} flight={Flights}/>}/>
-          <Route exact path="/otherDates" render={() => <OtherDates model= {modelInstance}/>}/>
         </header>
       </div>
     );

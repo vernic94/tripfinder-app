@@ -59,7 +59,7 @@ if(flightInfo.length > 0) {
         <div className="align-center">
         <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
         <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
-        </i> <br></br>Click on the "saved flights" button in the topbar to view your saved flights.
+        </i> <br></br>To view your saved flights you can click on the "saved flights" button in the topbar.
         </p>
         <h1 > <strong>Search Results</strong></h1>
         <div>

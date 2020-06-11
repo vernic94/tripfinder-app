@@ -6,13 +6,13 @@ const PurchaseView = (props) => {
   
   let boughtFlight = props.model.getSelectedFlight().map(flight =>      
           (
-              <div>
-                  <div>
+              <div className="align-center">
+                  <div className="align-center">
                    <p> <strong>From: </strong>{flight.source["Name"]} - {flight.source["IataCode"]}</p>
                    <p>{flight.departureDate}</p>
                    <p>{flight.outboundCarrier["Name"]}</p>
                 </div>
-                <div>
+                <div className="align-center">
                    <p><strong>To: </strong> {flight.destination["Name"]} - {flight.destination["IataCode"]}</p>
                    <p>{flight.returnDate}</p>
                    <p>{flight.inboundCarrier["Name"]}</p>

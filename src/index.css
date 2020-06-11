@@ -37,7 +37,7 @@ code {
   box-sizing: content-box;
   border: 2px solid black;
   border-radius: 10px;
-  padding: 2%;
+  padding: 1%;
   flex-wrap: wrap;
 }
 
@@ -126,5 +126,40 @@ input[type = text]{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  /* font-size: calc(10px + 2vmin); */
+}
+
+.extra-dates {
+  text-decoration: none;
+  display: inline-block;
+  padding: 4px 10px;
+  border-color: #282c34;
+  border-radius: 50%;
+}
+
+.extra-dates:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.arrow {
+  background-color: white;
+  color: #282c34;
+  font-size: 20px;
+}
+
+/* .next {
+  background-color: #4CAF50;
+  color: white;
+}*/
+
+.round {
+  border-radius: 10%;
+} 
+
+.dates-alignment{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
 }
