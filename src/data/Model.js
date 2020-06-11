@@ -3,17 +3,6 @@ import ObservableModel from "./ObservableModel";
 import * as constants from "./apiConfig";
 import * as firebase from 'firebase';
 
-// var firebaseConfig = {
-//   apiKey: "AIzaSyCVROIjVhBzdK69OwROxJVqPfEskc2Ards",
-//     authDomain: "trippadvicer-project.firebaseapp.com",
-//     databaseURL: "https://trippadvicer-project.firebaseio.com",
-//     projectId: "trippadvicer-project",
-//     storageBucket: "trippadvicer-project.appspot.com",
-//     messagingSenderId: "667211405537",
-//     appId: "1:667211405537:web:9b371698082eef7b7ebfa0",
-//     measurementId: "G-69HJ73Q14B"
-// }
-
 class Model extends ObservableModel {
   constructor() {
     super();
@@ -31,8 +20,43 @@ class Model extends ObservableModel {
     this.data = [];
   }
 
+
+getTodaysDate(){
+  let today = new Date();
+  let date;
+  if((today.getMonth()+1) > 9 && today.getDate() > 9){
+    date = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+  }
+  else if((today.getMonth()+1) < 10){
+    date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-" + today.getDate();
+  }
+  else if(today.getDate() < 10){
+    date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-0" + today.getDate();
+  }
+  return date;
+}
+
+checkDepartureDate(e){
+  if(Date.parse(e) < Date.parse(this.getTodaysDate())){
+    alert("Oops! The date you chose has already passed! Please choose a valid departure date.")
+  }
+  if(this.getReturnDate() != "" && e > this.getReturnDate()){
+    alert("You have chosen a return date that is earlier than the departure date. Please choose different dates!")
+  }
+  else{
+    this.setDepartureDate(e)
+  }
+}
+
+checkReturnDate(e){
+  if(e < this.getDepartureDate()){
+      alert("You have chosen a return date that is earlier than the departure date. Please choose different dates!")
+  }else{
+    this.setReturnDate(e)
+  }
+}
+
   fetchSavedFlightArray() {
-    //firebase.initializeApp(firebaseConfig)
     var databaseRef = firebase.database().ref('flights');
     databaseRef.once("value")
       .then((snapshot) => { 

@@ -22,8 +22,8 @@ import yesterdayDateR from "./YesterdayDateR";
   let [showTomorrowReturn, setTomorrowReturn ] = useState(false);
   let [showYesterdayReturn, setYesterdayReturn ] = useState(false);
 
-  let tomorrowD = tomorrowDateD()
-  let yesterdayD = yesterdayDateD()
+  let tomorrowD = tomorrowDateD();
+  let yesterdayD = yesterdayDateD();
   let tomorrowR = tomorrowDateR();
   let yesterdayR = yesterdayDateR();
     
@@ -38,16 +38,16 @@ import yesterdayDateR from "./YesterdayDateR";
     function setDate(option) {
         switch(option) {
             case 1:
-                props.model.setDepartureDate(tomorrowD)
+                props.model.checkDepartureDate(tomorrowD)
                 break;
             case 2:
-                props.model.setDepartureDate(yesterdayD)
+                props.model.checkDepartureDate(yesterdayD)
                 break;
             case 3:
-                props.model.setReturnDate(tomorrowR)
+                props.model.checkReturnDate(tomorrowR)
                 break;
             case 4:
-                props.model.setReturnDate(yesterdayR)
+                props.model.checkReturnDate(yesterdayR)
                 break;
             default:
         }
@@ -122,7 +122,7 @@ import yesterdayDateR from "./YesterdayDateR";
         <div className="align-center">
           {showDateButtons ?
           <div>
-            <p>Quick-search on the availability on previous and next dates</p>
+            <p>Check availability on previous and next dates</p>
             <div className="dates-alignment">
               <div className="welcome-text">
                 <p>Departure Date</p>
@@ -142,7 +142,7 @@ import yesterdayDateR from "./YesterdayDateR";
               </div>
               </div>
             </div> : null}
-      {showLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
+            {showLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
             {showTomorrowDeparture ? <Flights 
                 model={props.model} 
                 quotes={props.model.getflightQuotes()} 
@@ -168,11 +168,11 @@ import yesterdayDateR from "./YesterdayDateR";
                 carriers = {props.model.getflightCarriers()} 
                 currencies={props.model.getflightCurrencies()}/>: null}
             {showFlights? <Flights 
-                    model={props.model} 
-                    quotes={props.model.getflightQuotes()} 
-                    places={props.model.getflightPlaces()} 
-                    carriers = {props.model.getflightCarriers()} 
-                    currencies={props.model.getflightCurrencies()}/> : null}
+                model={props.model} 
+                quotes={props.model.getflightQuotes()} 
+                places={props.model.getflightPlaces()} 
+                carriers = {props.model.getflightCarriers()} 
+                currencies={props.model.getflightCurrencies()}/> : null}
         </div>
     </div>
   );

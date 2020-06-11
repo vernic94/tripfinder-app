@@ -9,6 +9,8 @@ import modelInstance from "./data/Model"
 import { Component } from "react";
 import SavedSearches from './components/SavedSearches';
 import PurchaseView from "./components/PurchaseView";
+import Dates from './components/Dates';
+import Header from './components/Header';
 
 class App extends Component {
   
@@ -28,10 +30,10 @@ class App extends Component {
         <header className="App-header">
           {/* We rended diffrent component based on the path */}
           <Route exact path="/" component={Welcome}  />
-          <Route exact path="/search" render={() => <SearchFlights model={modelInstance}/>} />
+          <Route exact path="/search" render={() => <SearchFlights model={modelInstance} header={Header}/>} />
           <Route exact path="/flights" render={() => <Flights model= {modelInstance}/>}/>
-          <Route exact path="/savedSearches" render={() => <SavedSearches model={modelInstance}/>} />
-          <Route exact path="/purchase" render={() => <PurchaseView model= {modelInstance} flight={Flights}/>}/>
+          <Route exact path="/savedSearches" render={() => <SavedSearches model={modelInstance}  header={Header}/>} />
+          <Route exact path="/purchase" render={() => <PurchaseView model= {modelInstance}  header={Header} />}/>
         </header>
       </div>
     );

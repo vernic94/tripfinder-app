@@ -50,6 +50,7 @@ const yesterdayDateD = () => {
             yesterdayDate = getYear() + "-" + getMonth() + "-" + (getDay() - 1)
         }
     }
+    
 
     getYesterday()
     return yesterdayDate;

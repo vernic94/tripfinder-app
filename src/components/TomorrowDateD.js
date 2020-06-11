@@ -55,6 +55,6 @@ const tomorrowDateD = () => {
 
     getTomorrow();
     
-    return tomorrowDate
+    return tomorrowDate;
 }
 export default tomorrowDateD;

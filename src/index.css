@@ -148,18 +148,18 @@ input[type = text]{
   font-size: 20px;
 }
 
-/* .next {
-  background-color: #4CAF50;
-  color: white;
-}*/
-
-.round {
-  border-radius: 10%;
-} 
-
 .dates-alignment{
   display: flex;
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.position-right{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  /* justify-content: space-between; */
+  float: right;
+  color: #282c34;
 }

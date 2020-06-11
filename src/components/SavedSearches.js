@@ -71,9 +71,6 @@ const SavedSearches = (props) => {
     return(
         <div>
             <Header2></Header2>
-            {/* <Link to="/search">
-                <button className="button"> Back to search</button>
-            </Link> */}
              <div className="align-center">
             {showLoader ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} /> : null }
             <h1 className="welcome-text">Ready to book your flight?</h1>

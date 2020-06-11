@@ -7,11 +7,10 @@ class Header2 extends Component {
 
     return (
       <div class="topnav"> 
+       <Link to = "/">
         <h1 className="topbar">Tripfinder</h1>
+        </Link>
         <div >
-            <Link to = "/">
-            <button className="saved"> Home </button>
-            </Link>
             <Link to="/search">
                 <button className="saved"> Back to search</button>
             </Link>

@@ -56,12 +56,14 @@ import "../index.css";
 
 if(flightInfo.length > 0) {
     return(
-        <div className="align-center">
-        <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
-        <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
-        </i> <br></br>To view your saved flights you can click on the "saved flights" button in the topbar.
-        </p>
+        <div >
         <h1 > <strong>Search Results</strong></h1>
+        <div className="position-right">
+            <p><i>Not sure about booking <strong>RIGHT NOW</strong>?
+            <br></br><strong>No problem!</strong> Just click the save button to save the flight and book it later!
+            </i> <br></br>To view your saved flights you can click on the "saved flights" button in the topbar.
+            </p>
+        </div>
         <div>
         <ul className="table-header">
                     <th>From</th>
